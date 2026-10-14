@@ -235,34 +235,43 @@
 .hero-slide__label {
   display: inline-block;
   font-family: var(--font-body, 'DM Sans', sans-serif);
-  font-size: clamp(0.75rem, 0.85vw, 0.875rem);
-  font-weight: 600;
+  font-size: clamp(0.8125rem, 0.95vw, 0.95rem);
+  font-weight: 700;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--bronze, #A67C2E);
   margin-bottom: 0.85rem;
 }
 
-/* 2. Large Headline: Service Name */
 .hero-slide__title {
   font-family: var(--font-heading, 'DM Sans', sans-serif);
-  font-size: clamp(2.45rem, 4.6vw, 4.15rem);
-  font-weight: 600;
-  line-height: 1.1;
-  letter-spacing: -0.025em;
+  font-size: clamp(2.85rem, 5.2vw, 4.65rem);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
   color: var(--espresso, #2B211A);
   margin: 0 0 1.15rem 0;
+}
+
+.hero-slide__title-br {
+  display: block;
+}
+
+@media (max-width: 900px) {
+  .hero-slide__title-br {
+    display: inline;
+  }
 }
 
 /* 3. Short Sentence */
 .hero-slide__description {
   font-family: var(--font-body, 'DM Sans', sans-serif);
-  font-size: clamp(1rem, 1.2vw, 1.22rem);
-  font-weight: 400;
+  font-size: clamp(1.08rem, 1.35vw, 1.32rem);
+  font-weight: 500;
   line-height: 1.65;
-  color: var(--taupe, #675748);
+  color: var(--espresso, #2B211A);
   margin: 0 0 clamp(1.75rem, 3.5vh, 2.75rem) 0;
-  max-width: 520px;
+  max-width: 560px;
 }
 
 /* 4. Side-by-Side Action Buttons */
@@ -484,17 +493,23 @@
   }
 
   .hero-slide__label {
-    font-size: 0.75rem;
-    margin-bottom: 0.4rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
   }
 
   .hero-slide__title {
-    font-size: clamp(2rem, 7.5vw, 2.65rem);
-    margin-bottom: 0.75rem;
+    font-size: clamp(2.35rem, 8.5vw, 3.15rem);
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 0.85rem;
   }
 
   .hero-slide__description {
-    font-size: 0.98rem;
+    font-size: 1.08rem;
+    font-weight: 500;
+    line-height: 1.6;
+    color: var(--espresso, #2B211A);
     margin-bottom: 1.5rem;
   }
 

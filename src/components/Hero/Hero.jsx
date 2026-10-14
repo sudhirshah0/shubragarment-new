@@ -51,7 +51,12 @@ const HERO_SERVICES = [
   },
   {
     id: 'polo-tshirts',
-    name: 'Polo & Promotional T-shirts',
+    name: (
+      <>
+        Polo &amp; Promotional<br className="hero-slide__title-br" /> T-shirts
+      </>
+    ),
+    plainName: 'Polo & Promotional T-shirts',
     description: 'Custom polos and t-shirts, branded with your logo.',
     image: '/images/hero/polo-and-tshirts.jpg',
     alt: 'Shubra Garments Custom Embroidered Polos and Promotional T-Shirts',
@@ -91,7 +96,7 @@ const Hero = () => {
       img.src = service.image;
       img.onerror = () => {
         console.warn(
-          `[Hero Slider] Missing image file: "${service.image}" for service "${service.name}".`
+          `[Hero Slider] Missing image file: "${service.image}" for service "${service.plainName || service.name}".`
         );
         setImageErrors((prev) => ({ ...prev, [service.id]: true }));
       };
@@ -100,7 +105,7 @@ const Hero = () => {
 
   const handleImageError = (service) => {
     console.warn(
-      `[Hero Slider] Image failed to load: "${service.image}" for service "${service.name}".`
+      `[Hero Slider] Image failed to load: "${service.image}" for service "${service.plainName || service.name}".`
     );
     setImageErrors((prev) => ({ ...prev, [service.id]: true }));
   };
@@ -369,7 +374,7 @@ const Hero = () => {
                     type="button"
                     role="tab"
                     aria-selected={isActive}
-                    aria-label={`Slide ${index + 1} of ${totalSlides}: ${service.name}`}
+                    aria-label={`Slide ${index + 1} of ${totalSlides}: ${service.plainName || service.name}`}
                     className={`hero-slider__dot ${isActive ? 'hero-slider__dot--active' : ''}`}
                     onClick={() => goToSlide(index)}
                   />

@@ -65,6 +65,30 @@ const App = () => {
     setIsLoading(false);
     document.body.classList.remove('scroll-locked');
     window.dispatchEvent(new CustomEvent('shubra:loader-complete'));
+
+    // Ensure immediate landing at top (hero section) upon loader finish
+    if (window.lenis) {
+      window.lenis.scrollTo(0, { immediate: true });
+    } else {
+      window.scrollTo(0, 0);
+    }
+  }, []);
+
+  /* ── Ensure page always loads/refreshes at the top Hero Section ── */
+  useEffect(() => {
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
+    }
+    window.scrollTo(0, 0);
+
+    const timer = setTimeout(() => {
+      window.scrollTo(0, 0);
+      if (window.lenis) {
+        window.lenis.scrollTo(0, { immediate: true });
+      }
+    }, 100);
+
+    return () => clearTimeout(timer);
   }, []);
 
   /* ── Lenis smooth scroll ─────────────────────────────────────── */
