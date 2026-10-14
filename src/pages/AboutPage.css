@@ -678,4 +678,7 @@
   .about-expertise__grid {
     grid-template-columns: 1fr;
   }
+  .about-process__content {
+    padding: 1.25rem 1.15rem 1.35rem;
+  }
 }
