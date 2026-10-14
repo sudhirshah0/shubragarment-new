@@ -1,0 +1,346 @@
+/* ═══════════════════════════════════════════════════════════════════
+   PageHeroSlider.css — Styling for 5-Second Touch-Enabled Hero Sliders
+   ═══════════════════════════════════════════════════════════════════ */
+
+.page-hero-slider {
+  position: relative;
+  min-height: clamp(520px, 68vh, 760px);
+  display: flex;
+  align-items: center;
+  padding-top: calc(clamp(4.8rem, 8.5vh, 6.2rem) + 1.5rem);
+  padding-bottom: clamp(3.5rem, 6vw, 5rem);
+  overflow: hidden;
+  background-color: var(--cream, #F7F2EC);
+  border-bottom: 1px solid rgba(103, 87, 72, 0.12);
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* ── Background Track & Sliding Images ───────────────────────── */
+.page-hero-slider__bg-track {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.page-hero-slider__slide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  visibility: hidden;
+  transform: translate3d(100%, 0, 0);
+  transition: transform 0.85s cubic-bezier(0.22, 1, 0.36, 1),
+              opacity 0.85s cubic-bezier(0.22, 1, 0.36, 1),
+              visibility 0.85s;
+  will-change: transform, opacity;
+}
+
+/* Sliding Forward (Right to Left) */
+.page-hero-slider__bg-track--dir-next .page-hero-slider__slide--next {
+  transform: translate3d(100%, 0, 0);
+  opacity: 0;
+  visibility: hidden;
+  z-index: 1;
+}
+
+.page-hero-slider__bg-track--dir-next .page-hero-slider__slide--prev {
+  transform: translate3d(-100%, 0, 0);
+  opacity: 0;
+  visibility: hidden;
+  z-index: 1;
+}
+
+/* Sliding Backward (Left to Right) */
+.page-hero-slider__bg-track--dir-prev .page-hero-slider__slide--next {
+  transform: translate3d(-100%, 0, 0);
+  opacity: 0;
+  visibility: hidden;
+  z-index: 1;
+}
+
+.page-hero-slider__bg-track--dir-prev .page-hero-slider__slide--prev {
+  transform: translate3d(100%, 0, 0);
+  opacity: 0;
+  visibility: hidden;
+  z-index: 1;
+}
+
+.page-hero-slider__slide--active {
+  opacity: 1;
+  visibility: visible;
+  transform: translate3d(0, 0, 0);
+  z-index: 2;
+}
+
+.page-hero-slider__slide--inactive {
+  opacity: 0;
+  visibility: hidden;
+  z-index: 0;
+}
+
+.page-hero-slider__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center right;
+  display: block;
+}
+
+.page-hero-slider__image-caption {
+  position: absolute;
+  bottom: 1.25rem;
+  right: 2rem;
+  background: rgba(31, 24, 18, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #DDD0BE;
+  font-family: var(--font-body, 'DM Sans', sans-serif);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.35rem 0.85rem;
+  border-radius: 4px;
+  border: 1px solid rgba(221, 208, 190, 0.2);
+  z-index: 3;
+}
+
+/* ── Luxury Gradient Veil: preserves text readability on left ── */
+.page-hero-slider__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(247, 242, 236, 0.96) 0%,
+    rgba(247, 242, 236, 0.88) 38%,
+    rgba(247, 242, 236, 0.45) 68%,
+    rgba(247, 242, 236, 0.15) 100%
+  );
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* ── Foreground Header Typography ───────────────────────────── */
+.page-hero-slider__container {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.page-hero-slider__content-box {
+  max-width: 680px;
+  text-align: left;
+}
+
+.page-hero-slider__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 1.1rem;
+  background: rgba(166, 124, 46, 0.12);
+  border: 1px solid rgba(166, 124, 46, 0.32);
+  border-radius: 999px;
+  font-family: var(--font-body, 'DM Sans', sans-serif);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: var(--bronze, #A67C2E);
+  text-transform: uppercase;
+  margin-bottom: 1.25rem;
+}
+
+.page-hero-slider__title {
+  font-family: var(--font-heading, 'DM Sans', sans-serif);
+  font-size: clamp(2.35rem, 5.2vw, 3.85rem);
+  font-weight: 700;
+  line-height: 1.12;
+  letter-spacing: -0.025em;
+  color: var(--espresso, #2B211A);
+  margin: 0 0 1.25rem 0;
+  text-align: left;
+}
+
+.page-hero-slider__title em {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--bronze, #A67C2E);
+}
+
+.page-hero-slider__desc {
+  font-family: var(--font-body, 'DM Sans', sans-serif);
+  font-size: clamp(1rem, 1.2vw, 1.15rem);
+  line-height: 1.68;
+  color: var(--taupe, #675748);
+  max-width: 620px;
+  margin: 0;
+  text-align: left;
+}
+
+.page-hero-slider__actions {
+  margin-top: 1.75rem;
+}
+
+.page-hero-slider__cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-body, 'DM Sans', sans-serif);
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #FFFFFF;
+  background: var(--espresso, #2B211A);
+  padding: 0.85rem 1.85rem;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 16px rgba(43, 33, 26, 0.16);
+}
+
+.page-hero-slider__cta-btn:hover {
+  background: var(--bronze, #A67C2E);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(166, 124, 46, 0.28);
+}
+
+/* ── Slider Controls: Dots & Arrows ─────────────────────────── */
+.page-hero-slider__controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  width: 100%;
+  padding-top: 1rem;
+}
+
+.page-hero-slider__dots {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.page-hero-slider__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 4px;
+  background-color: rgba(103, 87, 72, 0.28);
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: width 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              background-color 0.35s ease,
+              border-radius 0.35s ease;
+}
+
+.page-hero-slider__dot--active {
+  width: 28px;
+  background-color: var(--espresso, #2B211A);
+  border-radius: 999px;
+}
+
+.page-hero-slider__dot:hover:not(.page-hero-slider__dot--active) {
+  background-color: rgba(103, 87, 72, 0.6);
+}
+
+.page-hero-slider__arrows {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin-left: auto;
+}
+
+.page-hero-slider__arrow {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid var(--sand, #DDD0BE);
+  color: var(--espresso, #2B211A);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.page-hero-slider__arrow:hover {
+  background-color: var(--espresso, #2B211A);
+  color: #FFFFFF;
+  border-color: var(--espresso, #2B211A);
+  transform: scale(1.05);
+}
+
+/* ── Mobile Responsiveness (Screen < 900px) ──────────────────── */
+@media (max-width: 900px) {
+  .page-hero-slider {
+    min-height: clamp(480px, 75vh, 660px);
+    padding-top: calc(clamp(4.2rem, 7vh, 5.2rem) + 1.25rem);
+    padding-bottom: 2rem;
+  }
+
+  .page-hero-slider__overlay {
+    background: linear-gradient(
+      180deg,
+      rgba(247, 242, 236, 0.72) 0%,
+      rgba(247, 242, 236, 0.90) 40%,
+      rgba(247, 242, 236, 0.98) 75%,
+      rgba(247, 242, 236, 1) 100%
+    );
+  }
+
+  .page-hero-slider__image {
+    object-position: center top;
+  }
+
+  .page-hero-slider__content-box {
+    max-width: 100%;
+  }
+
+  .page-hero-slider__badge {
+    font-size: 0.72rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .page-hero-slider__title {
+    font-size: clamp(2rem, 7.5vw, 2.75rem);
+    margin-bottom: 0.85rem;
+  }
+
+  .page-hero-slider__desc {
+    font-size: 0.98rem;
+    line-height: 1.6;
+  }
+
+  .page-hero-slider__controls {
+    padding-top: 0.5rem;
+  }
+
+  .page-hero-slider__image-caption {
+    display: none;
+  }
+}
+
+/* ── Reduced Motion Accessibility ────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .page-hero-slider__slide {
+    transform: none !important;
+    transition: opacity 0.35s ease !important;
+  }
+
+  .page-hero-slider__dot {
+    transition: none !important;
+  }
+}

@@ -1,0 +1,401 @@
+/* ═══════════════════════════════════════════════════════════════
+   AboutShubra.css — Detailed "About Shubra" Showcase Styles
+   2-Column Luxury Layout: Left Building Image + 30+ Years Tag,
+   Right In-Depth Editorial Narrative & Stats Grid
+   ═══════════════════════════════════════════════════════════════ */
+
+.about-shubra {
+  position: relative;
+  background-color: var(--bg-secondary, #EFE7DC);
+  border-top: 1px solid rgba(103, 87, 72, 0.14);
+  border-bottom: 1px solid rgba(103, 87, 72, 0.14);
+  padding-block: clamp(4.5rem, 8vw, 7.5rem);
+  overflow: hidden;
+}
+
+.about-shubra__container {
+  width: 100%;
+}
+
+.about-shubra__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: start;
+  gap: clamp(2.5rem, 5vw, 5rem);
+}
+
+.about-shubra__media-col {
+  order: 2;
+}
+
+.about-shubra__content {
+  order: 1;
+}
+
+@media (min-width: 1024px) {
+  .about-shubra__grid {
+    grid-template-columns: 1.05fr 1.15fr;
+    align-items: start;
+  }
+
+  .about-shubra__media-col {
+    order: 0;
+  }
+
+  .about-shubra__content {
+    order: 0;
+  }
+}
+
+/* ── Left Column: Media Stage & 30+ Years Tag ────────────────── */
+.about-shubra__media-col {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.5rem;
+}
+
+.about-shubra__media-caption {
+  width: 100%;
+  max-width: 620px;
+  padding: 1.25rem 1.5rem;
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(103, 87, 72, 0.14);
+  border-left: 3px solid var(--bronze, #A67C2E);
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(43, 33, 26, 0.04);
+}
+
+.about-shubra__media-desc {
+  font-size: clamp(0.85rem, 0.95vw, 0.92rem);
+  line-height: 1.65;
+  color: var(--taupe, #675748);
+  margin: 0;
+}
+
+.about-shubra__image-frame {
+  position: relative;
+  width: 100%;
+  max-width: 620px;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 16px 48px rgba(43, 33, 26, 0.12),
+              0 2px 12px rgba(43, 33, 26, 0.06);
+  border: 1px solid rgba(221, 208, 190, 0.9);
+  background-color: #FFFFFF;
+}
+
+.about-shubra__image-glow {
+  position: absolute;
+  inset: -15%;
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(217, 188, 122, 0.2) 0%,
+    rgba(247, 242, 236, 0) 70%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+.about-shubra__img {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.about-shubra__image-frame:hover .about-shubra__img {
+  transform: scale(1.03);
+}
+
+/* ── 30+ Years Tag Badge on Image (Bottom Left) ──────────────── */
+.about-shubra__badge-tag {
+  position: absolute;
+  bottom: clamp(1rem, 2.5vw, 1.75rem);
+  left: clamp(1rem, 2.5vw, 1.75rem);
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.85rem;
+  background: rgba(43, 33, 26, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(217, 188, 122, 0.55);
+  border-radius: 14px;
+  padding: 0.85rem 1.35rem;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+  transition: transform 0.35s ease, border-color 0.35s ease;
+}
+
+.about-shubra__image-frame:hover .about-shubra__badge-tag {
+  transform: translateY(-3px);
+  border-color: var(--champagne, #D9BC7A);
+}
+
+.about-shubra__badge-number {
+  font-family: var(--font-heading, 'DM Sans', sans-serif);
+  font-size: clamp(1.6rem, 2.5vw, 2.1rem);
+  font-weight: 700;
+  line-height: 1;
+  color: var(--champagne, #D9BC7A);
+  letter-spacing: -0.02em;
+}
+
+.about-shubra__badge-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.about-shubra__badge-title {
+  font-family: var(--font-body, 'DM Sans', sans-serif);
+  font-size: clamp(0.78rem, 0.9vw, 0.88rem);
+  font-weight: 700;
+  color: #FFFFFF;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.about-shubra__badge-subtitle {
+  font-size: clamp(0.68rem, 0.75vw, 0.75rem);
+  color: #DDD0BE;
+  letter-spacing: 0.04em;
+}
+
+/* ── Location Micro-pill (Top Right of Image) ───────────────── */
+.about-shubra__location-tag {
+  position: absolute;
+  top: clamp(0.85rem, 2vw, 1.25rem);
+  right: clamp(0.85rem, 2vw, 1.25rem);
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(247, 242, 236, 0.94);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(166, 124, 46, 0.35);
+  border-radius: 999px;
+  padding: 0.4rem 0.95rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--espresso, #2B211A);
+  box-shadow: 0 4px 16px rgba(43, 33, 26, 0.1);
+}
+
+.about-shubra__location-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: #25D366;
+  box-shadow: 0 0 6px rgba(37, 211, 102, 0.7);
+}
+
+/* ── Right Column: Narrative Content ─────────────────────────── */
+.about-shubra__content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+}
+
+.about-shubra__eyebrow-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.about-shubra__eyebrow-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--bronze, #A67C2E);
+}
+
+.about-shubra__eyebrow {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--bronze, #A67C2E);
+}
+
+.about-shubra__heading {
+  font-family: var(--font-heading, 'DM Sans', sans-serif);
+  font-size: clamp(1.85rem, 3.2vw, 2.75rem);
+  font-weight: 700;
+  color: var(--espresso, #2B211A);
+  line-height: 1.18;
+  letter-spacing: -0.025em;
+  margin: 0;
+  max-width: 22ch;
+}
+
+.about-shubra__heading em {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--bronze, #A67C2E);
+}
+
+@media (max-width: 640px) {
+  .about-shubra__heading-br {
+    display: none;
+  }
+}
+
+.about-shubra__paragraphs {
+  display: flex;
+  flex-direction: column;
+  gap: 0.95rem;
+  margin-top: 0.35rem;
+}
+
+.about-shubra__p {
+  font-size: clamp(0.92rem, 1.05vw, 1.02rem);
+  line-height: 1.72;
+  color: var(--taupe, #675748);
+  margin: 0;
+}
+
+.about-shubra__p--lead {
+  font-size: clamp(0.98rem, 1.15vw, 1.1rem);
+  color: rgba(43, 33, 26, 0.92);
+  line-height: 1.75;
+}
+
+.about-shubra__p strong {
+  color: var(--espresso, #2B211A);
+  font-weight: 600;
+}
+
+/* ── 4 Stats Cards Grid ──────────────────────────────────────── */
+.about-shubra__stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-top: 0.75rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid rgba(103, 87, 72, 0.16);
+}
+
+@media (max-width: 600px) {
+  .about-shubra__stats-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.about-shubra__stat-card {
+  background: #FFFFFF;
+  border: 1px solid rgba(221, 208, 190, 0.85);
+  border-radius: 12px;
+  padding: 1.1rem 1.25rem;
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 14px rgba(43, 33, 26, 0.04);
+}
+
+.about-shubra__stat-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(166, 124, 46, 0.5);
+  box-shadow: 0 8px 24px rgba(43, 33, 26, 0.08);
+}
+
+.about-shubra__stat-num {
+  font-family: var(--font-heading, 'DM Sans', sans-serif);
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: var(--bronze, #A67C2E);
+  display: block;
+  line-height: 1.1;
+  margin-bottom: 0.35rem;
+}
+
+.about-shubra__stat-label {
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: var(--espresso, #2B211A);
+  margin: 0 0 0.25rem 0;
+}
+
+.about-shubra__stat-sub {
+  font-size: 0.75rem;
+  line-height: 1.45;
+  color: var(--taupe, #675748);
+  margin: 0;
+}
+
+/* ── Action Buttons ───────────────────────────────────────────── */
+.about-shubra__actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 0.75rem;
+}
+
+.about-shubra__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1.75rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  white-space: nowrap;
+}
+
+.about-shubra__btn--primary {
+  background-color: var(--espresso, #2B211A);
+  color: #FFFFFF;
+  border: 1px solid var(--espresso, #2B211A);
+  box-shadow: 0 4px 16px rgba(43, 33, 26, 0.16);
+}
+
+.about-shubra__btn--primary:hover {
+  background-color: var(--bronze, #A67C2E);
+  border-color: var(--bronze, #A67C2E);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(166, 124, 46, 0.25);
+}
+
+.about-shubra__btn--secondary {
+  background-color: rgba(255, 255, 255, 0.85);
+  color: var(--espresso, #2B211A);
+  border: 1px solid rgba(103, 87, 72, 0.28);
+  backdrop-filter: blur(8px);
+}
+
+.about-shubra__btn--secondary:hover {
+  background-color: #FFFFFF;
+  border-color: var(--espresso, #2B211A);
+  transform: translateY(-2px);
+}
+
+@media (max-width: 900px) {
+  .about-shubra {
+    padding-block: clamp(2.5rem, 5vw, 3.75rem);
+  }
+}
+
+@media (max-width: 600px) {
+  .about-shubra__actions {
+    flex-direction: column;
+    width: 100%;
+  }
+  .about-shubra__btn {
+    width: 100%;
+  }
+}

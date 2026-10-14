@@ -1,0 +1,395 @@
+/* ═══════════════════════════════════════════════════════════════
+   SHUBRA GARMENTS — Global Styles
+   Reset, font imports, base typography, utility classes
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Design tokens ────────────────────────────────────────────── */
+@import './variables.css';
+
+/* ── Reset ────────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: auto; /* Lenis handles smooth scroll */
+  overflow-x: hidden;
+  width: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  font-weight: var(--fw-regular);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  color: var(--espresso);
+  background-color: var(--cream);
+  overflow-x: hidden;
+  width: 100%;
+  position: relative;
+}
+
+img, svg, picture, video, canvas {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ── Focus states (accessibility) ─────────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--bronze);
+  outline-offset: 3px;
+}
+
+/* ── Skip to main content (keyboard accessibility) ───────────── */
+.skip-to-content {
+  position: absolute;
+  top: -999px;
+  left: 1rem;
+  z-index: 10000;
+  padding: 0.75rem 1.25rem;
+  background-color: var(--espresso);
+  color: var(--cream);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  text-decoration: none;
+  border: 1px solid var(--bronze);
+  border-radius: var(--radius-sm);
+  transition: top 0.2s ease;
+}
+
+.skip-to-content:focus {
+  top: 1rem;
+}
+
+/* ── Base typography ──────────────────────────────────────────── */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-heading);
+  color: var(--espresso);
+  letter-spacing: -0.015em;
+}
+
+p {
+  font-family: var(--font-body);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-body);
+  max-width: 65ch;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+/* ── Labels & nav text ────────────────────────────────────────── */
+.label {
+  font-family: var(--font-body);
+  font-size: var(--fs-label);
+  font-weight: var(--fw-medium);
+  text-transform: uppercase;
+  letter-spacing: var(--ls-label);
+  color: var(--taupe);
+}
+
+/* ── Taglines ─────────────────────────────────────────────────── */
+.tagline {
+  font-family: var(--font-body);
+  font-style: normal;
+  font-weight: var(--fw-regular);
+  color: var(--taupe);
+}
+
+/* ── Container ────────────────────────────────────────────────── */
+.container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--container-px);
+}
+
+/* ── Section spacing ──────────────────────────────────────────── */
+.section {
+  padding-block: var(--section-padding);
+}
+
+/* ── Decorative thin line divider ─────────────────────────────── */
+.divider {
+  width: 100%;
+  height: 1px;
+  background-color: var(--sand);
+}
+
+.divider--bronze {
+  background-color: var(--bronze);
+}
+
+/* ── Four-petal logo mark (SVG inline usage) ──────────────────── */
+.logo-mark {
+  display: inline-block;
+  color: var(--bronze);
+  transition: transform var(--transition-base);
+}
+
+.logo-mark:hover {
+  transform: rotate(90deg);
+}
+
+/* ── Scroll-locked body (when loader / modal is active) ───────── */
+body.scroll-locked {
+  overflow: hidden !important;
+}
+
+body.scroll-locked .collections-modal,
+body.scroll-locked .checkout-modal,
+body.scroll-locked .navbar-cart {
+  touch-action: pan-y !important;
+}
+
+/* ── Reduced motion ───────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ── Universal Form Select Arrow Styling ──────────────────────── */
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%238C7D70' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 14px 14px;
+  padding-right: 2.75rem !important;
+  cursor: pointer;
+}
+
+select:focus {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23C89B60' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+}
+
+/* ── Selection colour ─────────────────────────────────────────── */
+::selection {
+  background-color: var(--champagne);
+  color: var(--espresso);
+}
+
+/* ── Global Mobile Responsiveness Safeguards ─────────────────── */
+html, body {
+  overflow-x: hidden !important;
+  max-width: 100vw;
+  -webkit-text-size-adjust: 100%;
+}
+
+#root {
+  overflow-x: hidden !important;
+  width: 100%;
+  max-width: 100vw;
+}
+
+@media (max-width: 768px) {
+  :root {
+    --section-padding: clamp(3.25rem, 6.5vh, 4.75rem);
+    --container-px: 1.25rem;
+    --fs-display: clamp(2.35rem, 8.5vw, 3.25rem);
+    --fs-h1: clamp(2rem, 6.5vw, 2.65rem);
+    --fs-h2: clamp(1.65rem, 5.5vw, 2.15rem);
+    --fs-h3: clamp(1.25rem, 4vw, 1.55rem);
+    --fs-body: 0.95rem;
+  }
+
+  /* Prevent button and link tap highlights on mobile */
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .container {
+    padding-inline: var(--container-px) !important;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --section-padding: clamp(2.75rem, 5.5vh, 4rem);
+    --container-px: 1.15rem;
+    --fs-display: clamp(2.15rem, 9.5vw, 2.75rem);
+    --fs-h1: clamp(1.85rem, 7.8vw, 2.35rem);
+    --fs-h2: clamp(1.5rem, 6vw, 1.95rem);
+    --fs-h3: clamp(1.2rem, 4.5vw, 1.45rem);
+    --fs-body: 0.9rem;
+  }
+
+  .section {
+    padding-block: var(--section-padding);
+  }
+
+  /* Ensure inputs fit small screens comfortably without iOS Safari auto-zoom */
+  input, select, textarea {
+    font-size: 16px;
+  }
+}
+
+/* Extra small screens (iPhone SE, Galaxy Z Fold 360px width, etc.) */
+@media (max-width: 380px) {
+  :root {
+    --container-px: 0.95rem;
+    --section-padding: clamp(2rem, 4.5vh, 3rem);
+    --fs-display: 1.85rem;
+    --fs-h1: 1.65rem;
+    --fs-h2: 1.4rem;
+    --fs-h3: 1.15rem;
+    --fs-body: 0.85rem;
+    --fs-small: 0.75rem;
+  }
+
+  p {
+    line-height: 1.55;
+  }
+}
+
+/* Narrow devices like Galaxy Z Fold cover screen (360px x 880px / 344px) */
+@media (max-width: 360px) {
+  :root {
+    --container-px: 0.75rem;
+    --section-padding: 2rem;
+    --fs-display: 1.7rem;
+    --fs-h1: 1.5rem;
+    --fs-h2: 1.3rem;
+    --fs-h3: 1.05rem;
+    --fs-body: 0.825rem;
+    --fs-small: 0.72rem;
+  }
+
+  .container {
+    padding-inline: 0.75rem !important;
+  }
+
+  .label {
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+  }
+}
+
+/* ── Modern Rendering & Scrolling Performance Optimizations ── */
+/* Promote key animated elements to separate compositor layers */
+.hero__slider-track,
+.appreciation__column-track,
+.clients-work__track,
+.collection-box,
+.custom-designer__workspace,
+.navbar {
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+/* Optimize rendering cost during active scrolling */
+@media (min-width: 1025px) {
+  .section {
+    contain: layout style;
+  }
+}
+
+/* Soften heavy GPU-intensive blurs on mobile screens to avoid FPS drops */
+@media (max-width: 768px) {
+  .hero__bg-glow,
+  .hero__pedestal-glow,
+  .about__image-glow,
+  .contact__glow-orb {
+    filter: blur(16px) !important;
+  }
+
+  .collections-modal__backdrop,
+  .checkout-modal__backdrop,
+  .navbar-auth__backdrop {
+    backdrop-filter: blur(4px) !important;
+    -webkit-backdrop-filter: blur(4px) !important;
+  }
+}
+
+/* ── Interactive Section Target Animation ─────────────────────── */
+/* Triggered when navigating through navbar section links or internal jumps */
+@keyframes sectionTargetPulse {
+  0% {
+    transform: scale(0.985);
+    box-shadow: 0 0 0 0 rgba(166, 124, 46, 0.45);
+  }
+  35% {
+    transform: scale(1.008);
+    box-shadow: 0 0 45px 8px rgba(166, 124, 46, 0.28);
+  }
+  70% {
+    transform: scale(1.002);
+    box-shadow: 0 0 25px 4px rgba(166, 124, 46, 0.15);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(166, 124, 46, 0);
+  }
+}
+
+@keyframes sectionHeaderShine {
+  0% {
+    opacity: 0.6;
+    transform: translateY(18px) scale(0.97);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-2px) scale(1.02);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.section--highlight-active {
+  animation: sectionTargetPulse 1.25s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+  position: relative;
+  z-index: 5;
+}
+
+.section--highlight-active > .container > div:first-child,
+.section--highlight-active .collections__header,
+.section--highlight-active .custom-designer__header,
+.section--highlight-active .bulk-corporate__header,
+.section--highlight-active .clients-work__header,
+.section--highlight-active .contact__header,
+.section--highlight-active .about__label,
+.section--highlight-active .about__heading {
+  animation: sectionHeaderShine 0.95s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+}
+
+
+

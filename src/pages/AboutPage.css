@@ -1,0 +1,681 @@
+/* ═══════════════════════════════════════════════════════════════
+   AboutPage.css — Dedicated Brand Heritage & Atelier Page
+   Featuring alternating zigzag layouts for:
+   - Why Shubra (4 core pillars with minimal imagery)
+   - Our Process (6 manufacturing stages with minimal imagery)
+   ═══════════════════════════════════════════════════════════════ */
+
+.about-page {
+  width: 100%;
+  min-height: 100vh;
+  background-color: var(--cream, #F7F2EC);
+  color: var(--espresso, #2B211A);
+  font-family: var(--font-body, 'DM Sans', sans-serif);
+  overflow-x: hidden;
+}
+
+/* ── Hero Banner ─────────────────────────────────────────────── */
+/* ── Hero Banner with Luxury Background Image ────────────────── */
+.about-hero {
+  position: relative;
+  min-height: clamp(480px, 58vh, 620px);
+  display: flex;
+  align-items: center;
+  padding-top: calc(clamp(4.8rem, 8.5vh, 6.2rem) + 2rem);
+  padding-bottom: clamp(3.5rem, 6vw, 5rem);
+  overflow: hidden;
+  background-color: var(--cream, #F7F2EC);
+  border-bottom: 1px solid rgba(103, 87, 72, 0.12);
+}
+
+.about-hero__bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.about-hero__bg-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center right;
+  display: block;
+}
+
+.about-hero__bg-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(247, 242, 236, 0.96) 0%,
+    rgba(247, 242, 236, 0.88) 42%,
+    rgba(247, 242, 236, 0.55) 70%,
+    rgba(247, 242, 236, 0.25) 100%
+  );
+  pointer-events: none;
+}
+
+.about-hero__container {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+}
+
+.about-hero__content-box {
+  max-width: 680px;
+  text-align: left;
+}
+
+.about-hero__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 1.1rem;
+  background: rgba(166, 124, 46, 0.12);
+  border: 1px solid rgba(166, 124, 46, 0.32);
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: var(--bronze, #A67C2E);
+  text-transform: uppercase;
+  margin-bottom: 1.25rem;
+}
+
+.about-hero__title {
+  font-family: var(--font-heading, 'DM Sans', sans-serif);
+  font-size: clamp(2.35rem, 5.2vw, 3.85rem);
+  font-weight: 700;
+  line-height: 1.12;
+  letter-spacing: -0.025em;
+  color: var(--espresso, #2B211A);
+  margin-bottom: 1.25rem;
+  text-align: left;
+}
+
+.about-hero__title em {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--bronze, #A67C2E);
+}
+
+.about-hero__desc {
+  font-size: clamp(1rem, 1.2vw, 1.15rem);
+  line-height: 1.68;
+  color: var(--taupe, #675748);
+  max-width: 620px;
+  margin: 0;
+  text-align: left;
+}
+
+/* ── Section Dividers & Headers ──────────────────────────────── */
+.about-section-header {
+  text-align: center;
+  max-width: 780px;
+  margin-inline: auto;
+  margin-bottom: clamp(2.5rem, 5vw, 4rem);
+}
+
+.about-section-header__tag {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--bronze, #A67C2E);
+  margin-bottom: 0.65rem;
+}
+
+.about-section-header__title {
+  font-family: var(--font-heading, 'DM Sans', sans-serif);
+  font-size: clamp(1.85rem, 3.5vw, 2.75rem);
+  font-weight: 700;
+  color: var(--espresso, #2B211A);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.85rem;
+}
+
+.about-section-header__desc {
+  font-size: clamp(0.95rem, 1.1vw, 1.05rem);
+  color: var(--taupe, #675748);
+  line-height: 1.6;
+}
+
+.about-section-header--story {
+  max-width: 1100px;
+}
+
+.about-section-header__desc--story {
+  max-width: 100%;
+  white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+  .about-section-header__desc--story {
+    white-space: normal;
+  }
+}
+
+/* ── 1. Our Story (Uses Craftsmanship Component) ─────────────── */
+.about-story-wrap {
+  position: relative;
+  border-bottom: 1px solid rgba(103, 87, 72, 0.1);
+}
+
+/* ── 2. Why Shubra Section ───────────────────────────────────── */
+.about-why {
+  padding-block: clamp(4rem, 8vw, 6.5rem);
+  background-color: var(--bg-secondary, #EFE7DC);
+  border-bottom: 1px solid rgba(103, 87, 72, 0.12);
+}
+
+/* ── About Zigzag Shared Styles ──────────────────────────────── */
+.about-zigzag-list {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(3rem, 6vw, 5rem);
+  width: 100%;
+}
+
+.about-zigzag-row {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.75rem, 3.5vw, 3.5rem);
+  align-items: center;
+  background: #FFFFFF;
+  border: 1px solid rgba(221, 208, 190, 0.85);
+  border-radius: 20px;
+  padding: clamp(1.5rem, 3vw, 2.75rem);
+  box-shadow: 0 6px 28px rgba(43, 33, 26, 0.05);
+  transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.3s ease;
+}
+
+.about-zigzag-row:hover {
+  transform: translateY(-4px);
+  border-color: rgba(166, 124, 46, 0.5);
+  box-shadow: 0 20px 48px rgba(43, 33, 26, 0.1);
+}
+
+@media (min-width: 900px) {
+  .about-zigzag-row {
+    flex-direction: row;
+  }
+
+  .about-zigzag-row--reverse {
+    flex-direction: row-reverse;
+  }
+
+  .about-zigzag-media,
+  .about-zigzag-content {
+    flex: 1;
+    width: 50%;
+  }
+}
+
+/* ── Media Column (Minimal Imagery) ──────────────────────────── */
+.about-zigzag-media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 11;
+  border-radius: 16px;
+  overflow: hidden;
+  background-color: #EFE7DC;
+}
+
+.about-zigzag-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.about-zigzag-row:hover .about-zigzag-img {
+  transform: scale(1.05);
+}
+
+.about-zigzag-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(31, 24, 18, 0.05) 0%, rgba(31, 24, 18, 0.35) 100%);
+  pointer-events: none;
+}
+
+.about-zigzag-metric-badge {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  background: rgba(31, 24, 18, 0.85);
+  backdrop-filter: blur(8px);
+  color: #D9BC7A;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.35rem 0.85rem;
+  border-radius: 999px;
+  border: 1px solid rgba(217, 188, 122, 0.35);
+  letter-spacing: 0.05em;
+}
+
+/* ── Content Column ──────────────────────────────────────────── */
+.about-zigzag-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  width: 100%;
+}
+
+.about-zigzag-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: var(--bronze, #A67C2E);
+  text-transform: uppercase;
+}
+
+.about-zigzag-title {
+  font-family: var(--font-heading, 'DM Sans', sans-serif);
+  font-size: clamp(1.5rem, 2.4vw, 2.1rem);
+  font-weight: 700;
+  color: var(--espresso, #2B211A);
+  line-height: 1.22;
+  letter-spacing: -0.015em;
+  margin: 0;
+}
+
+.about-zigzag-tagline {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--bronze, #A67C2E);
+  line-height: 1.45;
+  margin: 0;
+}
+
+.about-zigzag-desc {
+  font-size: 0.88rem;
+  line-height: 1.68;
+  color: rgba(43, 33, 26, 0.82);
+  margin: 0;
+}
+
+.about-zigzag-highlights {
+  list-style: none;
+  padding: 0;
+  margin: 0.5rem 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.about-zigzag-highlight-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.55rem;
+  font-size: 0.84rem;
+  color: var(--taupe, #675748);
+  line-height: 1.45;
+}
+
+.about-zigzag-check {
+  color: var(--bronze, #A67C2E);
+  font-weight: 700;
+  font-size: 0.88rem;
+}
+
+.about-zigzag-step-num-wrap {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+}
+
+.about-zigzag-step-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  color: var(--bronze, #A67C2E);
+}
+
+.about-zigzag-step-num {
+  font-family: var(--font-heading, 'DM Sans', sans-serif);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--espresso, #2B211A);
+}
+
+/* ── 3. Who Wears Shubra ─────────────────────────────────────── */
+.about-whowear {
+  padding-block: clamp(4rem, 8vw, 6.5rem);
+  background-color: var(--cream, #F7F2EC);
+  border-bottom: 1px solid rgba(103, 87, 72, 0.12);
+}
+
+.about-whowear__categories {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(1rem, 2vw, 1.75rem);
+  margin-bottom: 3.5rem;
+}
+
+.about-whowear__cat-card {
+  background: #FFF;
+  border: 1px solid rgba(103, 87, 72, 0.15);
+  border-radius: 14px;
+  padding: 1.75rem 1.5rem;
+  text-align: center;
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.about-whowear__cat-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--bronze, #A67C2E);
+}
+
+.about-whowear__cat-icon {
+  font-size: 2rem;
+  margin-bottom: 0.85rem;
+}
+
+.about-whowear__cat-title {
+  font-family: var(--font-heading, 'DM Sans', sans-serif);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--espresso, #2B211A);
+  margin-bottom: 0.65rem;
+}
+
+.about-whowear__cat-desc {
+  font-size: 0.8125rem;
+  line-height: 1.55;
+  color: var(--taupe, #675748);
+}
+
+.about-whowear__logos-title {
+  text-align: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--taupe, #675748);
+  margin-bottom: 1.5rem;
+}
+
+.about-whowear__trusted-slider {
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(43, 33, 26, 0.05);
+  border: 1px solid rgba(103, 87, 72, 0.14);
+  background-color: var(--bg-primary, #F7F2EC);
+}
+
+.about-whowear__trusted-slider .trusted-by {
+  border-top: none;
+  border-bottom: none;
+  background-color: transparent;
+}
+
+/* ── 4. Our Expertise Section ────────────────────────────────── */
+.about-expertise {
+  padding-block: clamp(4rem, 8vw, 6.5rem);
+  background: radial-gradient(circle at 10% 50%, #2B211A 0%, #17110C 100%);
+  color: #FFF;
+  border-bottom: 1px solid rgba(103, 87, 72, 0.12);
+}
+
+.about-expertise .about-section-header__tag {
+  color: var(--champagne, #D9BC7A);
+}
+
+.about-expertise .about-section-header__title {
+  color: #FFF;
+}
+
+.about-expertise .about-section-header__desc {
+  color: #DDD0BE;
+}
+
+.about-expertise__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(1.25rem, 2.5vw, 2rem);
+}
+
+.about-expertise__card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  padding: clamp(1.5rem, 2.5vw, 2rem);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.about-expertise__card:hover {
+  transform: translateY(-4px);
+  border-color: var(--champagne, #D9BC7A);
+}
+
+.about-expertise__num {
+  font-family: var(--font-heading, 'DM Sans', sans-serif);
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--champagne, #D9BC7A);
+  margin-bottom: 0.75rem;
+}
+
+.about-expertise__card-title {
+  font-family: var(--font-heading, 'DM Sans', sans-serif);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #FFF;
+  margin-bottom: 0.75rem;
+}
+
+.about-expertise__card-desc {
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: #DDD0BE;
+  margin-bottom: 1.25rem;
+  flex-grow: 1;
+}
+
+.about-expertise__bullets {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 1rem;
+}
+
+.about-expertise__bullet-item {
+  font-size: 0.8125rem;
+  color: #DDD0BE;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.about-expertise__bullet-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--champagne, #D9BC7A);
+  flex-shrink: 0;
+}
+
+/* ── 4. Our Process Section (Redesigned Editorial Stage Architecture) ── */
+.about-process {
+  padding-block: clamp(4.5rem, 8vw, 7rem);
+  background-color: var(--bg-primary, #F7F2EC);
+  border-top: 1px solid rgba(103, 87, 72, 0.12);
+  border-bottom: 1px solid rgba(103, 87, 72, 0.12);
+  position: relative;
+}
+
+/* 6-Stage Process Grid */
+.about-process__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(1.5rem, 3vw, 2.25rem);
+  margin-top: clamp(2rem, 4vw, 3rem);
+}
+
+@media (min-width: 640px) {
+  .about-process__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .about-process__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.about-process__card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background-color: #FFFFFF;
+  border: 1px solid rgba(221, 208, 190, 0.85);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(43, 33, 26, 0.04);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.4s ease,
+              border-color 0.3s ease;
+}
+
+.about-process__card:hover {
+  transform: translateY(-7px);
+  border-color: rgba(166, 124, 46, 0.5);
+  box-shadow: 0 20px 44px rgba(43, 33, 26, 0.1);
+}
+
+/* Process Card Media */
+.about-process__media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 11;
+  overflow: hidden;
+  background-color: var(--linen, #EFE7DC);
+}
+
+.about-process__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.about-process__card:hover .about-process__img {
+  transform: scale(1.06);
+}
+
+.about-process__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(31, 24, 18, 0.05) 0%,
+    rgba(31, 24, 18, 0.55) 100%
+  );
+  pointer-events: none;
+}
+
+.about-process__badge-row {
+  position: absolute;
+  inset-inline: 1rem;
+  bottom: 0.95rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  z-index: 2;
+}
+
+.about-process__stage-badge {
+  background: var(--espresso, #2B211A);
+  color: var(--champagne, #D9BC7A);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  border: 1px solid rgba(217, 188, 122, 0.4);
+}
+
+.about-process__metric-badge {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: var(--espresso, #2B211A);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  border: 1px solid rgba(103, 87, 72, 0.15);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+}
+
+/* Process Card Content */
+.about-process__content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  padding: 1.5rem 1.65rem 1.75rem;
+  flex: 1;
+}
+
+.about-process__title {
+  font-family: var(--font-heading, 'DM Sans', sans-serif);
+  font-size: 1.18rem;
+  font-weight: 700;
+  color: var(--espresso, #2B211A);
+  line-height: 1.22;
+  letter-spacing: -0.015em;
+  margin: 0;
+}
+
+.about-process__headline {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--bronze, #A67C2E);
+  line-height: 1.4;
+  margin: 0;
+}
+
+.about-process__desc {
+  font-size: 0.85rem;
+  line-height: 1.62;
+  color: var(--taupe, #675748);
+  margin: 0.35rem 0 0;
+}
+
+/* ── Responsive Refinements ──────────────────────────────────── */
+@media (max-width: 1024px) {
+  .about-whowear__categories {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .about-expertise__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .about-whowear__categories {
+    grid-template-columns: 1fr;
+  }
+  .about-expertise__grid {
+    grid-template-columns: 1fr;
+  }
+}

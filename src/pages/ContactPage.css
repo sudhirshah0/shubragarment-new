@@ -1,0 +1,69 @@
+/* ═══════════════════════════════════════════════════════════════
+   ContactPage.css — Dedicated Contact & Atelier Enquiries Page
+   ═══════════════════════════════════════════════════════════════ */
+
+.contactpage {
+  width: 100%;
+  min-height: 100vh;
+  background-color: var(--cream, #F7F2EC);
+  color: var(--espresso, #2B211A);
+  overflow-x: hidden;
+  padding-top: clamp(4.5rem, 8vw, 6.5rem);
+}
+
+.contactpage-hero {
+  position: relative;
+  padding-top: clamp(6.5rem, 12vw, 8.5rem);
+  padding-bottom: clamp(2.5rem, 5vw, 3.5rem);
+  background: linear-gradient(180deg, rgba(239, 231, 220, 0.45) 0%, rgba(247, 242, 236, 1) 100%);
+  border-bottom: 1px solid rgba(103, 87, 72, 0.12);
+  text-align: center;
+}
+
+.contactpage-hero__container {
+  max-width: 860px;
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+}
+
+.contactpage-hero__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 1.1rem;
+  background: rgba(166, 124, 46, 0.1);
+  border: 1px solid rgba(166, 124, 46, 0.28);
+  border-radius: 999px;
+  font-family: var(--font-body, 'DM Sans', sans-serif);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: var(--bronze, #A67C2E);
+  text-transform: uppercase;
+  margin-bottom: 1.25rem;
+}
+
+.contactpage-hero__title {
+  font-family: var(--font-heading, 'DM Sans', sans-serif);
+  font-size: clamp(2.25rem, 5vw, 3.75rem);
+  font-weight: 700;
+  line-height: 1.12;
+  letter-spacing: -0.025em;
+  color: var(--espresso, #2B211A);
+  margin-bottom: 1.25rem;
+}
+
+.contactpage-hero__title em {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--bronze, #A67C2E);
+}
+
+.contactpage-hero__desc {
+  font-family: var(--font-body, 'DM Sans', sans-serif);
+  font-size: clamp(1rem, 1.2vw, 1.15rem);
+  line-height: 1.65;
+  color: var(--taupe, #675748);
+  max-width: 700px;
+  margin-inline: auto;
+}

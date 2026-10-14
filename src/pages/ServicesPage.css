@@ -1,0 +1,364 @@
+/* ═══════════════════════════════════════════════════════════════
+   ServicesPage.css — Dedicated Services & Enterprise Uniforms Page
+   Zigzag alternating layout for 6 core capabilities
+   ═══════════════════════════════════════════════════════════════ */
+
+.services-page {
+  width: 100%;
+  min-height: 100vh;
+  background-color: var(--cream, #F7F2EC);
+  color: var(--espresso, #2B211A);
+  font-family: var(--font-body, 'DM Sans', sans-serif);
+  overflow-x: hidden;
+}
+
+/* ── Services Hero Banner with Luxury Background Image ────────── */
+.services-hero {
+  position: relative;
+  min-height: clamp(520px, 72vh, 800px);
+  display: flex;
+  align-items: center;
+  padding-top: calc(clamp(4.8rem, 8.5vh, 6.2rem) + 2rem);
+  padding-bottom: clamp(4rem, 7vw, 6rem);
+  overflow: hidden;
+  background-color: var(--cream, #F7F2EC);
+  border-bottom: 1px solid rgba(103, 87, 72, 0.12);
+}
+
+.services-hero__bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.services-hero__bg-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center right;
+  display: block;
+}
+
+.services-hero__bg-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(247, 242, 236, 0.94) 0%,
+    rgba(247, 242, 236, 0.82) 35%,
+    rgba(247, 242, 236, 0.40) 65%,
+    rgba(247, 242, 236, 0.08) 100%
+  );
+  pointer-events: none;
+}
+
+.services-hero__container {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+}
+
+.services-hero__content-box {
+  max-width: 680px;
+  text-align: left;
+}
+
+.services-hero__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 1.1rem;
+  background: rgba(166, 124, 46, 0.12);
+  border: 1px solid rgba(166, 124, 46, 0.32);
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: var(--bronze, #A67C2E);
+  text-transform: uppercase;
+  margin-bottom: 1.25rem;
+}
+
+.services-hero__title {
+  font-family: var(--font-heading, 'DM Sans', sans-serif);
+  font-size: clamp(2.35rem, 5.2vw, 3.85rem);
+  font-weight: 700;
+  line-height: 1.12;
+  letter-spacing: -0.025em;
+  color: var(--espresso, #2B211A);
+  margin-bottom: 1.25rem;
+  text-align: left;
+}
+
+.services-hero__title em {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--bronze, #A67C2E);
+}
+
+.services-hero__desc {
+  font-size: clamp(1rem, 1.2vw, 1.15rem);
+  line-height: 1.68;
+  color: var(--taupe, #675748);
+  max-width: 620px;
+  margin: 0;
+  text-align: left;
+}
+
+/* ── Services Overview ───────────────────────────────────────── */
+.services-overview {
+  padding-block: clamp(4.5rem, 8vw, 7rem);
+  background-color: var(--bg-secondary, #EFE7DC);
+  border-top: 1px solid rgba(103, 87, 72, 0.12);
+}
+
+.services-overview__header-wrap {
+  text-align: center;
+  max-width: 760px;
+  margin: 0 auto clamp(2.5rem, 5vw, 4.5rem);
+}
+
+.services-overview__badge {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--bronze, #A67C2E);
+  margin-bottom: 0.75rem;
+}
+
+.services-overview__heading {
+  font-family: var(--font-heading, 'DM Sans', sans-serif);
+  font-size: clamp(1.85rem, 3.5vw, 2.75rem);
+  font-weight: 700;
+  color: var(--espresso, #2B211A);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.85rem;
+}
+
+.services-overview__sub {
+  font-size: clamp(0.95rem, 1.1vw, 1.05rem);
+  line-height: 1.62;
+  color: var(--taupe, #675748);
+  margin: 0 auto;
+}
+
+/* ── Zigzag Alternating Rows ─────────────────────────────────── */
+.services-zigzag-list {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(3rem, 6vw, 5.5rem);
+  width: 100%;
+}
+
+.services-zigzag-row {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.75rem, 3.5vw, 3.5rem);
+  align-items: center;
+  background: #FFFFFF;
+  border: 1px solid rgba(221, 208, 190, 0.8);
+  border-radius: 20px;
+  padding: clamp(1.5rem, 3vw, 2.75rem);
+  box-shadow: 0 6px 28px rgba(43, 33, 26, 0.05);
+  transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.3s ease;
+}
+
+.services-zigzag-row:hover {
+  transform: translateY(-4px);
+  border-color: rgba(166, 124, 46, 0.5);
+  box-shadow: 0 20px 48px rgba(43, 33, 26, 0.1);
+}
+
+@media (min-width: 900px) {
+  .services-zigzag-row {
+    flex-direction: row;
+  }
+
+  .services-zigzag-row--reverse {
+    flex-direction: row-reverse;
+  }
+
+  .services-zigzag-media,
+  .services-zigzag-content {
+    flex: 1;
+    width: 50%;
+  }
+}
+
+/* ── Media Column (Minimal, Clean Framing) ───────────────────── */
+.services-zigzag-media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 11;
+  border-radius: 16px;
+  overflow: hidden;
+  background-color: #EFE7DC;
+}
+
+.services-zigzag-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.services-zigzag-row:hover .services-zigzag-img {
+  transform: scale(1.05);
+}
+
+.services-zigzag-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(31, 24, 18, 0.05) 0%, rgba(31, 24, 18, 0.35) 100%);
+  pointer-events: none;
+}
+
+.services-zigzag-num-badge {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  background: rgba(31, 24, 18, 0.85);
+  backdrop-filter: blur(8px);
+  color: #D9BC7A;
+  font-family: var(--font-heading, 'DM Sans', sans-serif);
+  font-size: 0.82rem;
+  font-weight: 700;
+  padding: 0.35rem 0.85rem;
+  border-radius: 999px;
+  border: 1px solid rgba(217, 188, 122, 0.35);
+  letter-spacing: 0.05em;
+}
+
+/* ── Content Column ──────────────────────────────────────────── */
+.services-zigzag-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  width: 100%;
+}
+
+.services-zigzag-tag {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: var(--bronze, #A67C2E);
+  text-transform: uppercase;
+}
+
+.services-zigzag-title {
+  font-family: var(--font-heading, 'DM Sans', sans-serif);
+  font-size: clamp(1.5rem, 2.4vw, 2.1rem);
+  font-weight: 700;
+  color: var(--espresso, #2B211A);
+  line-height: 1.22;
+  letter-spacing: -0.015em;
+  margin: 0;
+}
+
+.services-zigzag-tagline {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--bronze, #A67C2E);
+  line-height: 1.45;
+  margin: 0;
+}
+
+.services-zigzag-desc {
+  font-size: 0.88rem;
+  line-height: 1.68;
+  color: rgba(43, 33, 26, 0.82);
+  margin: 0;
+}
+
+.services-zigzag-features {
+  list-style: none;
+  padding: 0;
+  margin: 0.5rem 0 0.85rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.services-zigzag-features li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.55rem;
+  font-size: 0.84rem;
+  color: var(--taupe, #675748);
+  line-height: 1.45;
+}
+
+.services-zigzag-check {
+  color: var(--bronze, #A67C2E);
+  font-weight: 700;
+  font-size: 0.88rem;
+}
+
+.services-zigzag-actions {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 0.65rem;
+  margin-top: 0.5rem;
+  width: 100%;
+}
+
+.services-overview__btn {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 0.85rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-decoration: none;
+  border-radius: 999px;
+  transition: all 0.25s ease;
+  white-space: nowrap;
+  text-align: center;
+}
+
+@media (max-width: 480px) {
+  .services-zigzag-actions {
+    gap: 0.45rem;
+  }
+  .services-overview__btn {
+    padding: 0.7rem 0.5rem;
+    font-size: 0.76rem;
+  }
+}
+
+.services-overview__btn--primary {
+  background: var(--espresso, #2B211A);
+  color: var(--cream, #F7F2EC);
+  border: 1px solid var(--espresso, #2B211A);
+}
+
+.services-overview__btn--primary:hover {
+  background: var(--bronze, #A67C2E);
+  border-color: var(--bronze, #A67C2E);
+  color: #FFF;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(166, 124, 46, 0.3);
+}
+
+.services-overview__btn--wa {
+  background: #25D366;
+  color: #FFF;
+  border: 1px solid #25D366;
+}
+
+.services-overview__btn--wa:hover {
+  background: #1EBE5D;
+  border-color: #1EBE5D;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(37, 211, 102, 0.3);
+}

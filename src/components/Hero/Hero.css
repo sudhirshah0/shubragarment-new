@@ -1,0 +1,538 @@
+/* ═══════════════════════════════════════════════════════════════
+   Hero.css — Full-Screen Luxury Service Slider
+   Full-screen architectural image carousel with quiet luxury aesthetic,
+   editorial typography, ambient veil, and accessible controls.
+   ═══════════════════════════════════════════════════════════════ */
+
+.hero {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-top: calc(clamp(4.8rem, 8.5vh, 6.2rem) + 4px);
+  padding-bottom: 0;
+  overflow: hidden;
+  background-color: var(--cream, #F7F2EC);
+  outline: none;
+  touch-action: pan-y;
+}
+
+.hero--fullscreen-slider:focus-visible {
+  outline: 2px solid var(--bronze, #A67C2E);
+  outline-offset: -2px;
+}
+
+/* ── Top UAE Brands Strip (Positioned at top of hero below navbar) ── */
+.hero__trusted-wrapper {
+  width: 100%;
+  position: relative;
+  z-index: 4;
+  flex-shrink: 0;
+  margin-bottom: 0;
+}
+
+/* ── Main Hero Stage Area (Strictly below the Trusted Brands Strip) ── */
+.hero__stage-wrapper {
+  position: relative;
+  flex: 1;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+  min-height: clamp(480px, 66vh, 720px);
+  touch-action: pan-y;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.hero__stage-wrapper:active {
+  cursor: grabbing;
+}
+
+/* ── Fullscreen Background Image Layer (Inside Stage) ─────────── */
+.hero-fullscreen-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.hero-fullscreen-bg__slide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  visibility: hidden;
+  transform: translate3d(100%, 0, 0);
+  transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+              opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+              visibility 0.9s;
+  will-change: transform, opacity;
+}
+
+/* Swiping right-to-left (forward direction) */
+.hero-fullscreen-bg--dir-next .hero-fullscreen-bg__slide--next {
+  transform: translate3d(100%, 0, 0);
+  opacity: 0;
+  visibility: hidden;
+  z-index: 1;
+}
+
+.hero-fullscreen-bg--dir-next .hero-fullscreen-bg__slide--prev {
+  transform: translate3d(-100%, 0, 0);
+  opacity: 0;
+  visibility: hidden;
+  z-index: 1;
+}
+
+/* Swiping left-to-right (backward direction) */
+.hero-fullscreen-bg--dir-prev .hero-fullscreen-bg__slide--next {
+  transform: translate3d(-100%, 0, 0);
+  opacity: 0;
+  visibility: hidden;
+  z-index: 1;
+}
+
+.hero-fullscreen-bg--dir-prev .hero-fullscreen-bg__slide--prev {
+  transform: translate3d(100%, 0, 0);
+  opacity: 0;
+  visibility: hidden;
+  z-index: 1;
+}
+
+.hero-fullscreen-bg__slide--active {
+  opacity: 1;
+  visibility: visible;
+  transform: translate3d(0, 0, 0);
+  z-index: 2;
+}
+
+.hero-fullscreen-bg__slide--inactive {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.hero-fullscreen-bg__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: right top;
+  display: block;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+/* Luxury Editorial Gradient Veil (shields typography on left, completely clear on right) */
+.hero-fullscreen-bg__overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    #F7F2EC 0%,
+    rgba(247, 242, 236, 0.96) 28%,
+    rgba(247, 242, 236, 0.65) 48%,
+    rgba(247, 242, 236, 0.15) 68%,
+    transparent 85%
+  );
+  pointer-events: none;
+}
+
+.hero-fullscreen-bg__fallback-pattern {
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at 70% 50%, rgba(217, 188, 122, 0.18) 0%, rgba(247, 242, 236, 0.95) 75%);
+}
+
+/* ── Ambient Spotlights ───────────────────────────────────────── */
+.hero__bg-glow {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 1;
+  transform: translateZ(0);
+}
+
+.hero__bg-glow--top {
+  top: -15%;
+  right: 5%;
+  width: clamp(320px, 45vw, 650px);
+  height: clamp(320px, 45vw, 650px);
+  background: radial-gradient(circle, rgba(217, 188, 122, 0.16) 0%, rgba(217, 188, 122, 0.04) 45%, rgba(247, 242, 236, 0) 70%);
+}
+
+.hero__bg-glow--bottom {
+  bottom: -10%;
+  left: -5%;
+  width: clamp(340px, 45vw, 680px);
+  height: clamp(340px, 45vw, 680px);
+  background: radial-gradient(circle, rgba(166, 124, 46, 0.10) 0%, rgba(166, 124, 46, 0.03) 45%, rgba(247, 242, 236, 0) 70%);
+}
+
+/* ── Main Container ───────────────────────────────────────────── */
+.hero__container {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+/* ── Slider Layout ────────────────────────────────────────────── */
+.hero-slider--fullscreen {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: clamp(380px, 55vh, 560px);
+  width: 100%;
+}
+
+/* ── Left Column: Editorial Content Pane ──────────────────────── */
+.hero-slider__content-col {
+  position: relative;
+  display: grid;
+  grid-template-areas: 'content';
+  align-items: center;
+  max-width: 620px;
+  min-height: 270px;
+}
+
+.hero-slide__text-pane {
+  grid-area: content;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(18px);
+  transition: opacity 0.7s cubic-bezier(0.25, 1, 0.5, 1),
+              transform 0.7s cubic-bezier(0.25, 1, 0.5, 1),
+              visibility 0.7s;
+}
+
+.hero-slide__text-pane--active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0);
+  z-index: 2;
+}
+
+/* 1. Small Label: 30+ years in the UAE */
+.hero-slide__label {
+  display: inline-block;
+  font-family: var(--font-body, 'DM Sans', sans-serif);
+  font-size: clamp(0.75rem, 0.85vw, 0.875rem);
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--bronze, #A67C2E);
+  margin-bottom: 0.85rem;
+}
+
+/* 2. Large Headline: Service Name */
+.hero-slide__title {
+  font-family: var(--font-heading, 'DM Sans', sans-serif);
+  font-size: clamp(2.45rem, 4.6vw, 4.15rem);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  color: var(--espresso, #2B211A);
+  margin: 0 0 1.15rem 0;
+}
+
+/* 3. Short Sentence */
+.hero-slide__description {
+  font-family: var(--font-body, 'DM Sans', sans-serif);
+  font-size: clamp(1rem, 1.2vw, 1.22rem);
+  font-weight: 400;
+  line-height: 1.65;
+  color: var(--taupe, #675748);
+  margin: 0 0 clamp(1.75rem, 3.5vh, 2.75rem) 0;
+  max-width: 520px;
+}
+
+/* 4. Side-by-Side Action Buttons */
+.hero-slide__actions {
+  display: flex;
+  align-items: center;
+  gap: 1.15rem;
+  flex-wrap: wrap;
+}
+
+.hero-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  font-family: var(--font-body, 'DM Sans', sans-serif);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  padding: 0.9rem 2.15rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  white-space: nowrap;
+}
+
+.hero-btn:focus-visible {
+  outline: 2px solid var(--bronze, #A67C2E);
+  outline-offset: 3px;
+}
+
+/* Primary "Get a quote" Button */
+.hero-btn--primary {
+  background-color: var(--espresso, #2B211A);
+  color: #FFFFFF;
+  border: 1px solid var(--espresso, #2B211A);
+  box-shadow: 0 4px 18px rgba(43, 33, 26, 0.15);
+}
+
+.hero-btn--primary:hover {
+  background-color: var(--bronze, #A67C2E);
+  border-color: var(--bronze, #A67C2E);
+  color: #FFFFFF;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(166, 124, 46, 0.25);
+}
+
+/* Outline "WhatsApp" & "Start designing" Buttons */
+.hero-btn--outline {
+  background-color: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: var(--espresso, #2B211A);
+  border: 1px solid rgba(43, 33, 26, 0.28);
+}
+
+.hero-btn--outline:hover {
+  border-color: var(--espresso, #2B211A);
+  background-color: rgba(255, 255, 255, 0.95);
+  transform: translateY(-2px);
+}
+
+.hero-btn--wa {
+  color: #1a7e3d;
+  border-color: rgba(37, 211, 102, 0.55);
+}
+
+.hero-btn--wa:hover {
+  background-color: rgba(37, 211, 102, 0.1);
+  border-color: #25D366;
+  color: #12632e;
+}
+
+.hero-btn__wa-icon {
+  flex-shrink: 0;
+  color: #25D366;
+}
+
+/* ── Footer Bar: Active Extended Dots & Navigation Arrows ───── */
+.hero-slider__footer-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-top: clamp(2rem, 4vh, 3.5rem);
+  width: 100%;
+}
+
+/* Dots: Active dot is extended / longer */
+.hero-slider__dots {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.hero-slider__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 4px;
+  background-color: rgba(103, 87, 72, 0.28);
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: width 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              background-color 0.35s ease,
+              border-radius 0.35s ease;
+}
+
+.hero-slider__dot--active {
+  width: 32px;
+  background-color: var(--espresso, #2B211A);
+  border-radius: 999px;
+}
+
+.hero-slider__dot:hover:not(.hero-slider__dot--active) {
+  background-color: rgba(103, 87, 72, 0.6);
+}
+
+.hero-slider__dot:focus-visible {
+  outline: 2px solid var(--bronze, #A67C2E);
+  outline-offset: 2px;
+}
+
+/* Arrow Navigation Buttons */
+.hero-slider__arrows {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-left: auto;
+}
+
+.hero-slider__arrow {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid var(--sand, #DDD0BE);
+  color: var(--espresso, #2B211A);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.hero-slider__arrow:hover {
+  background-color: var(--espresso, #2B211A);
+  color: #FFFFFF;
+  border-color: var(--espresso, #2B211A);
+  transform: scale(1.06);
+}
+
+.hero-slider__arrow:focus-visible {
+  outline: 2px solid var(--bronze, #A67C2E);
+  outline-offset: 2px;
+}
+
+/* ── Mobile & Tablet Responsiveness ──────────────────────────── */
+@media (max-width: 900px) {
+  .hero {
+    min-height: auto;
+    padding-top: calc(clamp(4.2rem, 7vh, 5.2rem) + 4px);
+    padding-bottom: 0;
+  }
+
+  .hero__stage-wrapper {
+    flex: initial;
+    min-height: clamp(400px, 60vh, 520px);
+    justify-content: center;
+    padding-block: 1.25rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-fullscreen-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    margin-bottom: 0;
+    overflow: hidden;
+  }
+
+  .hero-fullscreen-bg__slide {
+    /* Keep horizontal transform enabled on mobile for smooth finger swiping */
+  }
+
+  .hero-fullscreen-bg__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 70% top;
+    padding: 0;
+  }
+
+  .hero-fullscreen-bg__overlay {
+    display: block;
+    background: linear-gradient(
+      180deg,
+      rgba(247, 242, 236, 0.72) 0%,
+      rgba(247, 242, 236, 0.88) 35%,
+      rgba(247, 242, 236, 0.96) 75%,
+      rgba(247, 242, 236, 1) 100%
+    );
+  }
+
+  .hero-slider--fullscreen {
+    min-height: auto;
+    padding-top: 0;
+  }
+
+  .hero-slider__content-col {
+    max-width: 100%;
+    min-height: auto;
+  }
+
+  .hero-slide__label {
+    font-size: 0.75rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .hero-slide__title {
+    font-size: clamp(2rem, 7.5vw, 2.65rem);
+    margin-bottom: 0.75rem;
+  }
+
+  .hero-slide__description {
+    font-size: 0.98rem;
+    margin-bottom: 1.5rem;
+  }
+
+  /* Side-by-side single row buttons on mobile */
+  .hero-slide__actions {
+    flex-direction: row;
+    width: 100%;
+    gap: 0.65rem;
+  }
+
+  .hero-btn {
+    flex: 1;
+    min-width: 0;
+    padding: 0.8rem 0.75rem;
+    font-size: 0.82rem;
+    white-space: nowrap;
+    text-align: center;
+  }
+
+  .hero-slider__footer-bar {
+    margin-top: 1.75rem;
+    gap: 1rem;
+  }
+}
+
+/* ── Accessibility: Reduced Motion ────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .hero-fullscreen-bg__slide {
+    transform: none !important;
+    transition: opacity 0.35s ease !important;
+  }
+
+  .hero-slide__text-pane {
+    transform: none !important;
+    transition: opacity 0.35s ease !important;
+  }
+
+  .hero-slider__dot {
+    transition: none !important;
+  }
+}

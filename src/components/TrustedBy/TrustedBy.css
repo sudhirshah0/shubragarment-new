@@ -1,0 +1,187 @@
+/* ═══════════════════════════════════════════════════════════════
+   TrustedBy — Top of Hero Marquee Banner
+   Inspired by UAE luxury enterprise references
+   ═══════════════════════════════════════════════════════════════ */
+
+.trusted-by {
+  width: 100%;
+  position: relative;
+  z-index: 5;
+  background-color: var(--cream, #F7F2EC);
+  border-top: 1px solid rgba(103, 87, 72, 0.12);
+  border-bottom: 1px solid rgba(103, 87, 72, 0.12);
+  padding-block: 0.75rem;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(43, 33, 26, 0.02);
+}
+
+.trusted-by__inner {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+/* ── Fixed Left Label & Divider ───────────────────────────────── */
+.trusted-by__label-block {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  padding-left: clamp(1.25rem, 4vw, 3rem);
+  user-select: none;
+}
+
+.trusted-by__label {
+  font-family: var(--font-body, 'DM Sans', sans-serif);
+  font-size: clamp(0.6875rem, 0.78vw, 0.8125rem);
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #5c4d3f;
+  white-space: nowrap;
+}
+
+.trusted-by__divider {
+  display: inline-block;
+  width: 1px;
+  height: 28px;
+  background-color: rgba(103, 87, 72, 0.22);
+  margin-inline: clamp(1rem, 2vw, 2.25rem);
+  flex-shrink: 0;
+}
+
+/* ── Scrolling Marquee Container ──────────────────────────────── */
+.trusted-by__marquee-wrapper {
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: center;
+  /* Smooth edge fade gradients */
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 2.5%,
+    black 96%,
+    transparent 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 2.5%,
+    black 96%,
+    transparent 100%
+  );
+  cursor: grab;
+}
+
+.trusted-by__marquee-wrapper:active {
+  cursor: grabbing;
+}
+
+.trusted-by__marquee-track {
+  display: flex;
+  width: max-content;
+  align-items: center;
+}
+
+/* ── Continuous Scrolling Animation (Entering from Right) ────── */
+.trusted-by__marquee-group {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  gap: clamp(2.5rem, 4.5vw, 4.5rem);
+  padding-right: clamp(2.5rem, 4.5vw, 4.5rem);
+  animation: trustedMarqueeScroll 52s linear infinite;
+  will-change: transform;
+}
+
+/* Pause scroll when user hovers to inspect logos */
+.trusted-by__marquee-wrapper:hover .trusted-by__marquee-group,
+.trusted-by__marquee-wrapper:focus-within .trusted-by__marquee-group {
+  animation-play-state: paused;
+}
+
+@keyframes trustedMarqueeScroll {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-100%, 0, 0);
+  }
+}
+
+/* ── Logo Card Items ──────────────────────────────────────────── */
+.trusted-by__item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+  opacity: 0.88;
+}
+
+.trusted-by__item:hover {
+  opacity: 1;
+  transform: translateY(-1.5px) scale(1.03);
+}
+
+.trusted-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.trusted-logo svg {
+  display: block;
+  height: clamp(28px, 3.2vw, 36px);
+  width: auto;
+  max-width: 170px;
+}
+
+/* ── Responsive Refinements ──────────────────────────────────── */
+@media (max-width: 768px) {
+  .trusted-by {
+    padding-block: 0.6rem;
+  }
+
+  .trusted-by__label {
+    font-size: 0.65rem;
+    letter-spacing: 0.14em;
+  }
+
+  .trusted-by__divider {
+    height: 22px;
+    margin-inline: 0.85rem;
+  }
+
+  .trusted-by__marquee-group {
+    gap: 2rem;
+    padding-right: 2rem;
+    animation-duration: 28s;
+  }
+
+  .trusted-logo svg {
+    height: 26px;
+  }
+}
+
+@media (max-width: 480px) {
+  .trusted-by__label {
+    max-width: 90px;
+    white-space: normal;
+    line-height: 1.15;
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+  }
+}
+
+/* Accessibility: Respect Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .trusted-by__marquee-group {
+    animation: none;
+  }
+  .trusted-by__marquee-wrapper {
+    overflow-x: auto;
+    scrollbar-width: thin;
+  }
+}

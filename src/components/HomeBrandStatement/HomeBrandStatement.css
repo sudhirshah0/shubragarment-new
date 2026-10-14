@@ -1,0 +1,223 @@
+/* ═══════════════════════════════════════════════════════════════
+   HomeBrandStatement.css — High-End Brand Statement & Primary CTAs
+   Features:
+   - Luxury editorial framing with warm neutral palette
+   - Distinctive typography using DM Sans
+   - "Create Your Design" & "Explore Collections" side-by-side CTAs
+   - 3 Atelier credential highlight badges
+   ═══════════════════════════════════════════════════════════════ */
+
+.home-brand-statement {
+  position: relative;
+  width: 100%;
+  background-color: var(--bg-primary, #F7F2EC);
+  border-top: 1px solid rgba(103, 87, 72, 0.14);
+  border-bottom: 1px solid rgba(103, 87, 72, 0.14);
+  padding-block: clamp(4.5rem, 8vw, 7rem);
+  overflow: hidden;
+}
+
+/* Background subtle ambient watermark emblem */
+.home-brand-statement__bg-watermark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(680px, 90vw);
+  height: auto;
+  opacity: 0.035;
+  pointer-events: none;
+  user-select: none;
+}
+
+.home-brand-statement__container {
+  position: relative;
+  z-index: 2;
+  max-width: 960px;
+  margin-inline: auto;
+  padding-inline: clamp(1.25rem, 4vw, 2.5rem);
+  text-align: center;
+}
+
+/* ── Eyebrow Tag ─────────────────────────────────────────────── */
+.home-brand-statement__tag-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.4rem 1.15rem;
+  background: rgba(166, 124, 46, 0.08);
+  border: 1px solid rgba(166, 124, 46, 0.25);
+  border-radius: 999px;
+  margin-bottom: 1.5rem;
+}
+
+.home-brand-statement__diamond {
+  width: 6px;
+  height: 6px;
+  background: var(--bronze, #A67C2E);
+  transform: rotate(45deg);
+  flex-shrink: 0;
+}
+
+.home-brand-statement__tag {
+  font-family: var(--font-body, 'DM Sans', sans-serif);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--brass, #7E5F22);
+}
+
+/* ── Headline ────────────────────────────────────────────────── */
+.home-brand-statement__headline {
+  font-family: var(--font-heading, 'DM Sans', sans-serif);
+  font-size: clamp(2.35rem, 5.5vw, 4.25rem);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  color: var(--espresso, #2B211A);
+  margin-bottom: 1.35rem;
+}
+
+.home-brand-statement__headline em {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--bronze, #A67C2E);
+}
+
+/* ── Short Brand Statement ───────────────────────────────────── */
+.home-brand-statement__desc {
+  font-family: var(--font-body, 'DM Sans', sans-serif);
+  font-size: clamp(1.05rem, 1.35vw, 1.25rem);
+  line-height: 1.68;
+  color: var(--taupe, #675748);
+  max-width: 760px;
+  margin-inline: auto;
+  margin-bottom: clamp(2.25rem, 4vw, 3rem);
+}
+
+/* ── Call To Action Buttons ──────────────────────────────────── */
+.home-brand-statement__actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: clamp(1rem, 2vw, 1.5rem);
+  margin-bottom: clamp(3rem, 5vw, 4.25rem);
+}
+
+.home-brand-statement__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  min-height: 52px;
+  padding: 0.85rem 2.25rem;
+  border-radius: 999px;
+  font-family: var(--font-body, 'DM Sans', sans-serif);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 14px rgba(43, 33, 26, 0.06);
+}
+
+/* Primary CTA: Create Your Design */
+.home-brand-statement__btn--primary {
+  background: var(--espresso, #2B211A);
+  color: #FFF;
+  border: 1px solid var(--espresso, #2B211A);
+}
+
+.home-brand-statement__btn--primary:hover {
+  background: var(--bronze, #A67C2E);
+  border-color: var(--bronze, #A67C2E);
+  color: #FFF;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px -4px rgba(166, 124, 46, 0.3);
+}
+
+.home-brand-statement__btn-icon {
+  width: 17px;
+  height: 17px;
+  flex-shrink: 0;
+  transition: transform 0.25s ease;
+}
+
+.home-brand-statement__btn--primary:hover .home-brand-statement__btn-icon {
+  transform: rotate(15deg) scale(1.1);
+}
+
+/* Secondary CTA: Explore Collections */
+.home-brand-statement__btn--secondary {
+  background: rgba(247, 242, 236, 0.9);
+  color: var(--espresso, #2B211A);
+  border: 1px solid rgba(103, 87, 72, 0.28);
+}
+
+.home-brand-statement__btn--secondary:hover {
+  background: #FFF;
+  border-color: var(--bronze, #A67C2E);
+  color: var(--bronze, #A67C2E);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px -4px rgba(43, 33, 26, 0.08);
+}
+
+.home-brand-statement__btn--secondary:hover .home-brand-statement__arrow-icon {
+  transform: translateX(3px);
+}
+
+.home-brand-statement__arrow-icon {
+  transition: transform 0.25s ease;
+}
+
+/* ── Credentials Strip ───────────────────────────────────────── */
+.home-brand-statement__credentials {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(1rem, 2.5vw, 2.5rem);
+  padding-top: clamp(2rem, 3.5vw, 2.75rem);
+  border-top: 1px solid rgba(103, 87, 72, 0.14);
+}
+
+.home-brand-statement__cred-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.home-brand-statement__cred-value {
+  font-family: var(--font-heading, 'DM Sans', sans-serif);
+  font-size: clamp(1.4rem, 2.2vw, 1.85rem);
+  font-weight: 700;
+  color: var(--espresso, #2B211A);
+  margin-bottom: 0.25rem;
+  letter-spacing: -0.01em;
+}
+
+.home-brand-statement__cred-label {
+  font-family: var(--font-body, 'DM Sans', sans-serif);
+  font-size: clamp(0.75rem, 0.9vw, 0.8125rem);
+  color: var(--taupe, #675748);
+  font-weight: 500;
+}
+
+/* ── Mobile Adaptation ───────────────────────────────────────── */
+@media (max-width: 680px) {
+  .home-brand-statement__actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .home-brand-statement__btn {
+    width: 100%;
+  }
+
+  .home-brand-statement__credentials {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+}

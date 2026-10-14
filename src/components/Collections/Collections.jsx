@@ -1,0 +1,670 @@
+/* ═══════════════════════════════════════════════════════════════
+   Collections — Infinite Swipe Carousel with Center Focus & Modal
+   Features:
+   - 5 Clean Categories: Coats, Suits, Pants, Shirts, T-Shirts
+   - Infinite 3D cloth swipe from Left-to-Right & Right-to-Left
+   - Middle garment is visually enlarged (3D scale, pedestal glow & shadow)
+   - Clicking middle garment opens interactive detail modal:
+       * Color swatch selector with instant cloth image swap
+       * Size selector
+       * Fabric specs, fit, lead time & pricing
+       * "Add to Cart" button with quantity & floating cart drawer notification
+   - Touch drag, mouse drag, keyboard arrows, and prev/next controls
+   ═══════════════════════════════════════════════════════════════ */
+
+import { useState, useRef, useEffect, useCallback } from 'react';
+import { createPortal } from 'react-dom';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { collectionsData } from '../../data/collections';
+import MagneticButton from '../MagneticButton/MagneticButton';
+import './Collections.css';
+
+gsap.registerPlugin(ScrollTrigger);
+
+const Collections = () => {
+  const [selectedGarment, setSelectedGarment] = useState(null);
+  const [modalColorIndex, setModalColorIndex] = useState(0);
+  const [modalSize, setModalSize] = useState('M');
+  const [modalQty, setModalQty] = useState(1);
+  const [addedToast, setAddedToast] = useState(false);
+  const [cartCount, setCartCount] = useState(0);
+  const [flyingItem, setFlyingItem] = useState(null);
+  const [isZoomed, setIsZoomed] = useState(false);
+  const [showModalSizeChart, setShowModalSizeChart] = useState(false);
+  const modalImgRef = useRef(null);
+
+  // Keyboard escape to close modal
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (selectedGarment && e.key === 'Escape') {
+        setSelectedGarment(null);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [selectedGarment]);
+
+  // Lock background page scroll and pause Lenis virtual scroll while modal is open
+  useEffect(() => {
+    if (selectedGarment) {
+      if (window.lenis) {
+        window.lenis.stop();
+      }
+      document.body.classList.add('scroll-locked');
+    } else {
+      document.body.classList.remove('scroll-locked');
+      if (window.lenis) {
+        window.lenis.start();
+      }
+    }
+    return () => {
+      document.body.classList.remove('scroll-locked');
+      if (window.lenis) {
+        window.lenis.start();
+      }
+    };
+  }, [selectedGarment]);
+
+
+  const closeModal = () => {
+    setSelectedGarment(null);
+    setIsZoomed(false);
+    setShowModalSizeChart(false);
+  };
+
+  const handleAddToCart = () => {
+    const item = selectedGarment;
+    if (!item) return;
+    const selectedColor = item.colors[modalColorIndex];
+
+    // Trigger visual feedback
+    setAddedToast(true);
+
+    // Get current source image position
+    let startX = window.innerWidth / 2;
+    let startY = window.innerHeight / 2;
+    let startW = 140;
+    let startH = 160;
+
+    if (modalImgRef.current) {
+      const rect = modalImgRef.current.getBoundingClientRect();
+      startX = rect.left + rect.width / 2;
+      startY = rect.top + rect.height / 2;
+      startW = rect.width;
+      startH = rect.height;
+    }
+
+    // Locate target cart button (navbar cart button or stage button)
+    const cartTarget = document.querySelector('.navbar__cart-btn') || document.querySelector('.navbar__actions');
+    let targetX = window.innerWidth - 80;
+    let targetY = 32;
+
+    if (cartTarget) {
+      const targetRect = cartTarget.getBoundingClientRect();
+      targetX = targetRect.left + targetRect.width / 2;
+      targetY = targetRect.top + targetRect.height / 2;
+    }
+
+    // Set flying item with source and destination coordinates
+    setFlyingItem({
+      image: selectedColor.image,
+      startX,
+      startY,
+      startW,
+      startH,
+      targetX,
+      targetY,
+    });
+
+    // After flight arrives (750ms), increment cart counter & trigger celebration shake on cart icon
+    setTimeout(() => {
+      setCartCount((prev) => prev + modalQty);
+
+      const cartBtnEl = document.querySelector('.navbar__cart-btn');
+      if (cartBtnEl) {
+        cartBtnEl.classList.add('navbar__cart-btn--bounce');
+        setTimeout(() => cartBtnEl.classList.remove('navbar__cart-btn--bounce'), 600);
+      }
+
+      // Dispatch event for global cart
+      window.dispatchEvent(
+        new CustomEvent('shubra:add-to-cart', {
+          detail: {
+            id: item.id,
+            title: item.title,
+            color: selectedColor.name,
+            size: modalSize,
+            price: item.price,
+            quantity: modalQty,
+            image: selectedColor.image,
+          },
+        })
+      );
+    }, 700);
+
+    // Clean up flying item and close modal smoothly
+    setTimeout(() => {
+      setFlyingItem(null);
+    }, 850);
+
+    setTimeout(() => {
+      setAddedToast(false);
+      closeModal();
+    }, 1100);
+  };
+
+  const [activeCategory, setActiveCategory] = useState('all');
+
+  const categories = [
+    { key: 'all', label: 'All' },
+    { key: 'blazers', label: 'Blazers' },
+    { key: 'outerwear', label: 'Outerwear' },
+    { key: 'uniforms', label: 'Uniforms' },
+    { key: 'workwear', label: 'Workwear' },
+  ];
+
+  const filteredItems = activeCategory === 'all'
+    ? collectionsData
+    : collectionsData.filter((item) => {
+        if (activeCategory === 'blazers') return item.category === 'blazers';
+        if (activeCategory === 'outerwear') return item.category === 'leather' || item.category === 'headwear' || item.category === 'casual';
+        if (activeCategory === 'uniforms') return item.category === 'aviation' || item.category === 'trousers';
+        if (activeCategory === 'workwear') return item.category === 'workwear';
+        return item.category === activeCategory;
+      });
+
+  const [showAll, setShowAll] = useState(false);
+  const collectionsSectionRef = useRef(null);
+
+  // Refresh ScrollTrigger and smooth scroll calculations whenever category filters or expand states change
+  // This prevents blank space or trigger position mismatch in sections below (like Custom Designer)
+  useEffect(() => {
+    const refreshScroll = () => {
+      ScrollTrigger.refresh();
+      if (typeof window !== 'undefined' && window.lenis) {
+        window.lenis.resize();
+      }
+    };
+
+    // Immediate tick + RAF + short timeout to allow DOM and images to recalculate heights
+    refreshScroll();
+    const rafId = requestAnimationFrame(refreshScroll);
+    const timer = setTimeout(refreshScroll, 120);
+
+    return () => {
+      cancelAnimationFrame(rafId);
+      clearTimeout(timer);
+    };
+  }, [activeCategory, showAll]);
+
+  // Show only 2 rows (8 items in 4-column layout) by default
+  const INITIAL_LIMIT = 8;
+  const displayedItems = showAll ? filteredItems : filteredItems.slice(0, INITIAL_LIMIT);
+  const hasMore = filteredItems.length > INITIAL_LIMIT;
+
+  const handleToggleShowAll = () => {
+    if (showAll) {
+      // User is collapsing back to 2 rows (Show Less).
+      setShowAll(false);
+
+      // Smoothly bring the user directly to the Custom Designer section right below Collections
+      setTimeout(() => {
+        const designerEl = document.getElementById('custom-designer');
+        if (designerEl) {
+          if (window.lenis) {
+            window.lenis.scrollTo(designerEl, {
+              offset: -75,
+              duration: 0.9,
+              easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            });
+          } else {
+            const topPos = designerEl.getBoundingClientRect().top + window.scrollY;
+            window.scrollTo({
+              top: topPos - 75,
+              behavior: 'smooth',
+            });
+          }
+        }
+      }, 50);
+    } else {
+      setShowAll(true);
+    }
+  };
+
+  const openItemModal = (item, colorIndex = 0) => {
+    setSelectedGarment(item);
+    setModalColorIndex(colorIndex);
+    setModalSize('M');
+    setModalQty(1);
+    setIsZoomed(false);
+    setShowModalSizeChart(false);
+  };
+
+  return (
+    <section
+      ref={collectionsSectionRef}
+      className="collections section"
+      id="collections"
+      aria-label="Curated Garment Collections"
+    >
+      <div className="collections__container container">
+        {/* ── Section Header ─────────────────────────────────── */}
+        <div className="collections__header">
+          <div className="collections__title-wrap">
+            <h2 className="collections__title">Our Premium Collection</h2>
+            <p className="collections__subtitle">
+              Explore our master-tailored garments by category, crafted with fine Italian wools, Egyptian Giza cottons, and pure Mongolian cashmere.
+            </p>
+          </div>
+
+          {/* ── Category Filter Pills ──────────────────────────── */}
+          <div className="collections__category-bar" role="tablist" aria-label="Collections Categories">
+            {categories.map((cat) => (
+              <button
+                key={cat.key}
+                type="button"
+                role="tab"
+                aria-selected={activeCategory === cat.key}
+                className={`collections__category-tab ${
+                  activeCategory === cat.key ? 'collections__category-tab--active' : ''
+                }`}
+                onClick={() => {
+                  setActiveCategory(cat.key);
+                  setShowAll(false);
+                }}
+              >
+                {cat.label}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* ── Clean Box Product Grid (2 rows initial) ──────────── */}
+        <div className="collections__grid">
+          {displayedItems.map((item) => (
+            <div key={item.id} className="collection-box">
+              {/* Product Media Box */}
+              <div
+                className="collection-box__media"
+                onClick={() => openItemModal(item, 0)}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') openItemModal(item, 0);
+                }}
+                aria-label={`View ${item.title}`}
+              >
+                <div className="collection-box__glow" aria-hidden="true" />
+                <img
+                  src={item.colors[0].image}
+                  alt={item.title}
+                  className="collection-box__img"
+                  loading="lazy"
+                />
+              </div>
+
+              {/* Product Card Details */}
+              <div className="collection-box__info">
+                <div className="collection-box__title-row">
+                  <h3 className="collection-box__title" onClick={() => openItemModal(item, 0)}>
+                    {item.title}
+                  </h3>
+                </div>
+                <p className="collection-box__tagline">{item.tagline}</p>
+
+                {/* Color Swatch Dots & Price Row */}
+                <div className="collection-box__swatches-row">
+                  <div className="collection-box__swatches">
+                    {item.colors.map((c, cIdx) => (
+                      <button
+                        key={c.name}
+                        type="button"
+                        className="collection-box__swatch-dot"
+                        style={{ backgroundColor: c.hex }}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          openItemModal(item, cIdx);
+                        }}
+                        title={`${c.name} — Click to view`}
+                        aria-label={`View ${item.title} in ${c.name}`}
+                      />
+                    ))}
+                  </div>
+
+                  {/* Price placed right on all screens */}
+                  <span className="collection-box__price">{item.price}</span>
+                </div>
+
+                {/* Quick Add to Cart Button */}
+                <div className="collection-box__actions">
+                  <button
+                    type="button"
+                    className="collection-box__btn"
+                    onClick={() => openItemModal(item, 0)}
+                  >
+                    <span>Add to Cart</span>
+                    <span className="collection-box__btn-arrow">→</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* ── View More Button (when more than 2 rows exist) ──── */}
+        {hasMore && (
+          <div className="collections__view-more-wrap">
+            <button
+              type="button"
+              className="collections__view-more-btn"
+              onClick={handleToggleShowAll}
+            >
+              <span>{showAll ? 'Show Less' : `View More (${filteredItems.length - INITIAL_LIMIT} more)`}</span>
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                style={{
+                  transform: showAll ? 'rotate(180deg)' : 'rotate(0deg)',
+                  transition: 'transform 0.3s ease',
+                }}
+              >
+                <path d="M6 9l6 6 6-6" />
+              </svg>
+            </button>
+          </div>
+        )}
+      </div>
+
+      {/* ═════════════════════════════════════════════════════════════
+          GARMENT DETAILS & COLOR SELECTION MODAL POPUP
+          ═════════════════════════════════════════════════════════════ */}
+      {selectedGarment &&
+        typeof document !== 'undefined' &&
+        createPortal(
+          <div
+            className="collections-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="modal-garment-title"
+            data-lenis-prevent
+            onClick={closeModal}
+          >
+          {/* Backdrop Click Closes Modal */}
+          <div className="collections-modal__backdrop" aria-hidden="true" />
+
+          <div
+            className="collections-modal__dialog"
+            data-lenis-prevent
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Close Button */}
+            <button
+              type="button"
+              className="collections-modal__close"
+              onClick={closeModal}
+              aria-label="Close dialog"
+            >
+              ✕
+            </button>
+
+            <div className="collections-modal__grid">
+              {/* Left Column: Interactive Swatch Image Stage */}
+              <div className="collections-modal__media-col">
+                <div
+                  className={`collections-modal__img-stage ${isZoomed ? 'collections-modal__img-stage--zoomed' : ''}`}
+                  onClick={() => setIsZoomed((prev) => !prev)}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      setIsZoomed((prev) => !prev);
+                    }
+                  }}
+                  title={isZoomed ? 'Click to zoom out' : 'Click to zoom in 50%'}
+                  aria-label={isZoomed ? 'Zoom out product image' : 'Zoom in product image by 50%'}
+                >
+                  <div className="collections-modal__img-glow" aria-hidden="true" />
+                  <img
+                    ref={modalImgRef}
+                    key={selectedGarment.colors[modalColorIndex].image}
+                    src={selectedGarment.colors[modalColorIndex].image}
+                    alt={`${selectedGarment.title} in ${selectedGarment.colors[modalColorIndex].name}`}
+                    className={`collections-modal__img ${isZoomed ? 'collections-modal__img--zoomed' : ''}`}
+                  />
+                  <div className="collections-modal__ground-shadow" aria-hidden="true" />
+                  <span className="collections-modal__zoom-hint">
+                    {isZoomed ? '− Zoom Out' : '+ Click to Zoom (150%)'}
+                  </span>
+                </div>
+
+                <div className="collections-modal__color-label">
+                  <span className="label">SELECTED COLOR:</span>
+                  <strong>{selectedGarment.colors[modalColorIndex].name}</strong>
+                </div>
+              </div>
+
+              {/* Right Column: Garment Specs, Swatches & Add-To-Cart */}
+              <div className="collections-modal__details-col">
+                <h3 id="modal-garment-title" className="collections-modal__title">
+                  {selectedGarment.title}
+                </h3>
+
+                <p className="collections-modal__desc">{selectedGarment.description}</p>
+
+                {/* 1. Color Swatch Selector with Price next to it */}
+                <div className="collections-modal__swatch-group">
+                  <div className="collections-modal__group-label">
+                    <div className="collections-modal__color-info">
+                      <span className="label">COLOR:</span>
+                      <span className="collections-modal__active-color-name">
+                        {selectedGarment.colors[modalColorIndex].name}
+                      </span>
+                    </div>
+                    <span className="collections-modal__price-tag">
+                      AED {(selectedGarment.basePriceNum * modalQty).toLocaleString()}
+                    </span>
+                  </div>
+                  <div className="collections-modal__swatches">
+                    {selectedGarment.colors.map((color, cIdx) => (
+                      <button
+                        key={color.name}
+                        type="button"
+                        className={`collections-modal__swatch-circle ${
+                          modalColorIndex === cIdx ? 'collections-modal__swatch-circle--active' : ''
+                        }`}
+                        style={{ backgroundColor: color.hex }}
+                        onClick={() => setModalColorIndex(cIdx)}
+                        title={color.name}
+                        aria-label={`Select ${color.name}`}
+                      />
+                    ))}
+                  </div>
+                </div>
+
+                {/* 2. Size Selector (Clean single row + Size Chart Guide) */}
+                <div className="collections-modal__size-group">
+                  <div className="collections-modal__group-label">
+                    <span className="label">SIZE</span>
+                    <button
+                      type="button"
+                      className="collections-modal__size-chart-link"
+                      onClick={() => setShowModalSizeChart((prev) => !prev)}
+                      aria-label="View size chart guide"
+                    >
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <rect x="3" y="3" width="18" height="18" rx="2" />
+                        <line x1="3" y1="9" x2="21" y2="9" />
+                        <line x1="9" y1="21" x2="9" y2="9" />
+                      </svg>
+                      <span>{showModalSizeChart ? 'Hide Chart' : 'Size Chart (Inches)'}</span>
+                    </button>
+                  </div>
+                  <div className="collections-modal__sizes">
+                    {['S', 'M', 'L', 'XL', '2XL', '3XL'].map((sz) => (
+                      <button
+                        key={sz}
+                        type="button"
+                        className={`collections-modal__size-btn ${
+                          modalSize === sz ? 'collections-modal__size-btn--active' : ''
+                        }`}
+                        onClick={() => setModalSize(sz)}
+                      >
+                        {sz}
+                      </button>
+                    ))}
+                  </div>
+
+                  {/* ── Interactive Size Chart Guide matching specifications ── */}
+                  {showModalSizeChart && (
+                    <div className="collections-modal__size-chart-wrap" role="region" aria-label="Product Size Chart">
+                      <div className="collections-modal__size-chart-scroll">
+                        <table className="collections-modal__size-chart-table">
+                          <thead>
+                            <tr>
+                              <th className="collections-modal__th-metric">In Inches</th>
+                              <th>S</th>
+                              <th>M</th>
+                              <th>L</th>
+                              <th>XL</th>
+                              <th>2XL</th>
+                              <th>3XL</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td className="collections-modal__td-label">Length</td>
+                              <td className={modalSize === 'S' ? 'collections-modal__td--selected' : ''}>26</td>
+                              <td className={modalSize === 'M' ? 'collections-modal__td--selected' : ''}>27</td>
+                              <td className={modalSize === 'L' ? 'collections-modal__td--selected' : ''}>28</td>
+                              <td className={modalSize === 'XL' ? 'collections-modal__td--selected' : ''}>29</td>
+                              <td className={modalSize === '2XL' ? 'collections-modal__td--selected' : ''}>30</td>
+                              <td className={modalSize === '3XL' ? 'collections-modal__td--selected' : ''}>31</td>
+                            </tr>
+                            <tr>
+                              <td className="collections-modal__td-label">Chest</td>
+                              <td className={modalSize === 'S' ? 'collections-modal__td--selected' : ''}>38</td>
+                              <td className={modalSize === 'M' ? 'collections-modal__td--selected' : ''}>40</td>
+                              <td className={modalSize === 'L' ? 'collections-modal__td--selected' : ''}>42</td>
+                              <td className={modalSize === 'XL' ? 'collections-modal__td--selected' : ''}>44</td>
+                              <td className={modalSize === '2XL' ? 'collections-modal__td--selected' : ''}>46</td>
+                              <td className={modalSize === '3XL' ? 'collections-modal__td--selected' : ''}>48</td>
+                            </tr>
+                            <tr>
+                              <td className="collections-modal__td-label">Shoulder</td>
+                              <td className={modalSize === 'S' ? 'collections-modal__td--selected' : ''}>16</td>
+                              <td className={modalSize === 'M' ? 'collections-modal__td--selected' : ''}>17</td>
+                              <td className={modalSize === 'L' ? 'collections-modal__td--selected' : ''}>18</td>
+                              <td className={modalSize === 'XL' ? 'collections-modal__td--selected' : ''}>19</td>
+                              <td className={modalSize === '2XL' ? 'collections-modal__td--selected' : ''}>20</td>
+                              <td className={modalSize === '3XL' ? 'collections-modal__td--selected' : ''}>21</td>
+                            </tr>
+                            <tr>
+                              <td className="collections-modal__td-label">Sleeve Open</td>
+                              <td className={modalSize === 'S' ? 'collections-modal__td--selected' : ''}>3.5</td>
+                              <td className={modalSize === 'M' ? 'collections-modal__td--selected' : ''}>4</td>
+                              <td className={modalSize === 'L' ? 'collections-modal__td--selected' : ''}>4</td>
+                              <td className={modalSize === 'XL' ? 'collections-modal__td--selected' : ''}>4.5</td>
+                              <td className={modalSize === '2XL' ? 'collections-modal__td--selected' : ''}>4.5</td>
+                              <td className={modalSize === '3XL' ? 'collections-modal__td--selected' : ''}>5</td>
+                            </tr>
+                            <tr>
+                              <td className="collections-modal__td-label">Sleeve Length</td>
+                              <td className={modalSize === 'S' ? 'collections-modal__td--selected' : ''}>24</td>
+                              <td className={modalSize === 'M' ? 'collections-modal__td--selected' : ''}>25</td>
+                              <td className={modalSize === 'L' ? 'collections-modal__td--selected' : ''}>26</td>
+                              <td className={modalSize === 'XL' ? 'collections-modal__td--selected' : ''}>27</td>
+                              <td className={modalSize === '2XL' ? 'collections-modal__td--selected' : ''}>28</td>
+                              <td className={modalSize === '3XL' ? 'collections-modal__td--selected' : ''}>28.5</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <p className="collections-modal__size-chart-footnote">
+                        • Standard specifications in inches.
+                      </p>
+                    </div>
+                  )}
+                </div>
+
+                {/* 3. Minimal Single-Line Spec */}
+                <div className="collections-modal__quick-spec">
+                  <span className="collections-modal__spec-pill">
+                    {selectedGarment.fabric ? selectedGarment.fabric.split('(')[0].trim() : 'Premium Fabric'}
+                  </span>
+                </div>
+
+                {/* 4. Quantity and Add-To-Cart Action */}
+                <div className="collections-modal__actions">
+                  <div className="collections-modal__qty-selector">
+                    <button
+                      type="button"
+                      className="collections-modal__qty-btn"
+                      onClick={() => setModalQty((q) => Math.max(1, q - 1))}
+                    >
+                      –
+                    </button>
+                    <span className="collections-modal__qty-val">{modalQty}</span>
+                    <button
+                      type="button"
+                      className="collections-modal__qty-btn"
+                      onClick={() => setModalQty((q) => q + 1)}
+                    >
+                      +
+                    </button>
+                  </div>
+
+                  <button
+                    type="button"
+                    className={`collections-modal__cart-btn ${
+                      addedToast ? 'collections-modal__cart-btn--added' : ''
+                    }`}
+                    onClick={handleAddToCart}
+                  >
+                    {addedToast ? '✓ Added to Cart!' : 'Add to Cart'}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>,
+        document.body
+      )}
+
+      {/* ── Flying Cloth to Cart Animation Portal ───────────── */}
+      {flyingItem &&
+        typeof document !== 'undefined' &&
+        createPortal(
+          <div
+            className="collections-flyer"
+            style={{
+              '--start-x': `${flyingItem.startX}px`,
+              '--start-y': `${flyingItem.startY}px`,
+              '--start-w': `${flyingItem.startW}px`,
+              '--start-h': `${flyingItem.startH}px`,
+              '--target-x': `${flyingItem.targetX}px`,
+              '--target-y': `${flyingItem.targetY}px`,
+            }}
+            aria-hidden="true"
+          >
+            <img
+              src={flyingItem.image}
+              alt=""
+              className="collections-flyer__img"
+            />
+          </div>,
+          document.body
+        )}
+    </section>
+  );
+};
+
+export default Collections;

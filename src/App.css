@@ -1,0 +1,34 @@
+/* ═══════════════════════════════════════════════════════════════════
+   App.css — Minimal app-level styles
+   Component-specific styles live in their own folders.
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* Lenis scroll container rules */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* Smooth page load — content fades in after loader */
+main {
+  opacity: 1;
+  transition: opacity var(--transition-slow);
+}
