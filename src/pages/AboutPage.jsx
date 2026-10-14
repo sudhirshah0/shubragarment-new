@@ -13,6 +13,7 @@
 import React from 'react';
 import Craftsmanship from '../components/Craftsmanship/Craftsmanship';
 import TrustedBy from '../components/TrustedBy/TrustedBy';
+import Testimonials from '../components/Testimonials/Testimonials';
 import './AboutPage.css';
 
 /* ── Why Shubra Pillars (with Minimal Editorial Images) ───────── */
@@ -311,6 +312,11 @@ const AboutPage = () => {
             ))}
           </div>
         </div>
+      </section>
+
+      {/* ── 5. Client Appreciation & Reviews (Testimonials) ──── */}
+      <section id="about-testimonials" aria-label="Client Testimonials">
+        <Testimonials />
       </section>
 
     </div>

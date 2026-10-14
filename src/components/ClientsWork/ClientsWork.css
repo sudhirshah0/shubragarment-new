@@ -409,7 +409,8 @@
 }
 
 .clients-work__case-quote p {
-  font-style: italic;
+  font-style: normal;
+  font-weight: 700;
   font-size: 0.84rem;
   line-height: 1.5;
   color: var(--taupe);

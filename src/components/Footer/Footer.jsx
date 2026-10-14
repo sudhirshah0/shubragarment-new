@@ -135,41 +135,50 @@ const Footer = ({ onNavigate, currentPage }) => {
 
   return (
     <footer ref={footerRef} className="footer" role="contentinfo">
-      {/* ── Top Newsletter Registry Strip (hidden on Our Work section) ── */}
+      {/* ── Direct Atelier Enquiry Strip (hidden on Our Work section) ── */}
       {!isOurWorkPage && (
         <div className="footer__newsletter-strip">
           <div className="footer__newsletter-inner container">
             <div className="footer__newsletter-content">
-              <span className="label">THE ATELIER REGISTRY</span>
-              <h3 className="footer__newsletter-title">Privileged Seasonal Releases</h3>
+              <span className="label">DIRECT ATELIER DESK</span>
+              <h3 className="footer__newsletter-title">Have a Question or Custom Enquiry?</h3>
               <p className="tagline">
-                Receive private invitations to European cloth trunk shows, seasonal cashmere arrivals, and executive fitting appointments.
+                Ask about bespoke tailoring, corporate fleet uniforms, European fabric swatches, or request an on-site master fitting appointment across the UAE.
               </p>
             </div>
 
-            <form onSubmit={handleSubscribe} className="footer__newsletter-form">
-              <input
-                type="email"
-                required
-                placeholder="Enter your email address..."
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="footer__newsletter-input"
-              />
-              <button
-                type="submit"
-                className="footer__newsletter-btn"
-                data-cursor-text="JOIN"
+            <div className="footer__enquiry-actions">
+              <a
+                href="#/contact"
+                className="footer__enquiry-btn footer__enquiry-btn--primary"
+                onClick={(e) => handleLinkClick(e, 'contact')}
+                data-cursor-text="INQUIRE"
               >
-                Subscribe
-              </button>
-            </form>
+                <span>Inquiry</span>
+                <span className="footer__enquiry-arrow" aria-hidden="true">→</span>
+              </a>
 
-            {subscribed && (
-              <div className="footer__newsletter-msg">
-                <span>✓ Welcome to the Shubra Registry. Our seasonal dossier has been dispatched.</span>
-              </div>
-            )}
+              <a
+                href="https://wa.me/971500000000?text=Hello%20Shubra%20Garments,%20I%20have%20an%20enquiry%20about%20your%20bespoke%20services."
+                target="_blank"
+                rel="noopener noreferrer"
+                className="footer__enquiry-btn footer__enquiry-btn--wa"
+                data-cursor-text="CHAT"
+                aria-label="Inquire via WhatsApp"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  width="18"
+                  height="18"
+                  fill="currentColor"
+                  aria-hidden="true"
+                  className="footer__enquiry-wa-icon"
+                >
+                  <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2zm0 17.8c-1.49 0-2.95-.4-4.22-1.16l-.3-.18-3.13.82.84-3.05-.2-.31a7.92 7.92 0 0 1-1.22-4.2c0-4.41 3.59-8 8-8 2.14 0 4.15.83 5.66 2.34a7.96 7.96 0 0 1 2.34 5.66c0 4.41-3.59 8-7.99 8zm4.39-5.99c-.24-.12-1.42-.7-1.64-.78-.22-.08-.38-.12-.54.12-.16.24-.62.78-.76.94-.14.16-.28.18-.52.06-.24-.12-1.02-.38-1.95-1.21-.72-.64-1.21-1.44-1.35-1.68-.14-.24-.01-.37.11-.49.11-.11.24-.28.36-.42.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.54-1.3-.74-1.78-.2-.47-.4-.41-.54-.42h-.47c-.16 0-.42.06-.64.3-.22.24-.84.82-.84 2s.86 2.32.98 2.48c.12.16 1.7 2.6 4.12 3.64.58.25 1.02.4 1.38.51.58.18 1.11.16 1.53.1.47-.07 1.42-.58 1.62-1.14.2-.56.2-1.04.14-1.14-.06-.1-.22-.16-.46-.28z" />
+                </svg>
+                <span>WhatsApp</span>
+              </a>
+            </div>
           </div>
         </div>
       )}

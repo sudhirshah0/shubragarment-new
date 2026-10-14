@@ -54,64 +54,90 @@
   font-size: 0.95rem;
 }
 
-.footer__newsletter-form {
+.footer__enquiry-actions {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  width: 100%;
-  max-width: 440px;
+  gap: 0.85rem;
+  flex-wrap: wrap;
 }
 
 @media (max-width: 520px) {
-  .footer__newsletter-form {
-    flex-direction: column;
-    align-items: stretch;
-  }
-  .footer__newsletter-input,
-  .footer__newsletter-btn {
+  .footer__enquiry-actions {
     width: 100%;
+    flex-direction: row;
+    gap: 0.5rem;
+  }
+}
+
+.footer__enquiry-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1.65rem;
+  border-radius: var(--radius-sm, 6px);
+  font-family: var(--font-body, 'DM Sans', sans-serif);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  white-space: nowrap;
+}
+
+@media (max-width: 520px) {
+  .footer__enquiry-btn {
+    flex: 1;
+    padding: 0.8rem 0.75rem;
+    font-size: 0.8rem;
     text-align: center;
   }
 }
 
-.footer__newsletter-input {
-  flex: 1;
-  padding: 0.85rem 1.15rem;
-  background: rgba(247, 242, 236, 0.08);
-  border: 1px solid rgba(217, 188, 122, 0.3);
-  border-radius: var(--radius-sm);
-  color: var(--cream);
-  font-family: inherit;
-  font-size: 0.8125rem;
+/* Primary Inquiry Pill */
+.footer__enquiry-btn--primary {
+  background: linear-gradient(135deg, var(--bronze, #A67C2E), var(--champagne, #D9BC7A));
+  color: var(--espresso, #2B211A);
+  border: 1px solid var(--champagne, #D9BC7A);
+  box-shadow: 0 4px 16px rgba(166, 124, 46, 0.2);
 }
 
-.footer__newsletter-input:focus {
-  outline: none;
-  border-color: var(--champagne);
+.footer__enquiry-btn--primary:hover {
+  filter: brightness(1.12);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(166, 124, 46, 0.35);
 }
 
-.footer__newsletter-input::placeholder {
-  color: rgba(239, 231, 220, 0.4);
+.footer__enquiry-arrow {
+  color: var(--espresso, #2B211A);
+  font-size: 0.95rem;
+  transition: transform 0.25s ease;
 }
 
-.footer__newsletter-btn {
-  padding: 0.85rem 1.4rem;
-  background: linear-gradient(135deg, var(--bronze), var(--champagne));
-  color: var(--espresso);
-  border: none;
-  border-radius: var(--radius-sm);
-  font-family: var(--font-body);
-  font-size: 0.75rem;
-  font-weight: var(--fw-medium);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: transform var(--transition-fast), filter var(--transition-fast);
+.footer__enquiry-btn--primary:hover .footer__enquiry-arrow {
+  transform: translateX(3px);
 }
 
-.footer__newsletter-btn:hover {
-  filter: brightness(1.1);
-  transform: translateY(-1px);
+/* WhatsApp Pill */
+.footer__enquiry-btn--wa {
+  background: rgba(37, 211, 102, 0.12);
+  color: #25D366;
+  border: 1px solid rgba(37, 211, 102, 0.45);
+  backdrop-filter: blur(8px);
+}
+
+.footer__enquiry-btn--wa:hover {
+  background: #25D366;
+  color: #FFFFFF;
+  border-color: #25D366;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(37, 211, 102, 0.3);
+}
+
+.footer__enquiry-wa-icon {
+  flex-shrink: 0;
+  color: currentColor;
 }
 
 .footer__newsletter-msg {

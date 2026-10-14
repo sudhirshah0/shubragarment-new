@@ -181,8 +181,8 @@
 }
 
 .about__uae-italic {
-  font-style: italic;
-  font-weight: inherit;
+  font-style: normal;
+  font-weight: 700;
   color: var(--bronze);
 }
 
